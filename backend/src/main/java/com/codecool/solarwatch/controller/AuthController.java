@@ -2,11 +2,13 @@ package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.model.dto.request.MemberRequest;
 import com.codecool.solarwatch.model.dto.response.JwtResponse;
+import com.codecool.solarwatch.model.dto.response.MemberResponse;
 import com.codecool.solarwatch.security.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class MemberController {
@@ -35,12 +37,12 @@ public class MemberController {
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
-    public String me() {
-//        User user = (User) SecurityContextHolder.getContext()
-//                .getAuthentication().getPrincipal();
-//        return "Hello " + user.getUsername();
+//    @PreAuthorize("hasRole('USER')")
+    public MemberResponse me() {
         return authenticationService.me();
+
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        return "Hello " + user.getUsername();
     }
 
 
