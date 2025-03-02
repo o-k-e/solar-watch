@@ -1,10 +1,10 @@
 package com.codecool.solarwatch.security.service;
 
-import com.codecool.solarwatch.controller.MemberController;
-import com.codecool.solarwatch.controller.SolarWatchController;
+import com.codecool.solarwatch.controller.AuthController;
 import com.codecool.solarwatch.model.dto.request.MemberRequest;
 import com.codecool.solarwatch.model.dto.response.ErrorResponse;
 import com.codecool.solarwatch.model.dto.response.JwtResponse;
+import com.codecool.solarwatch.model.dto.response.MemberResponse;
 import com.codecool.solarwatch.model.dto.response.SuccessResponse;
 import com.codecool.solarwatch.model.entity.Member;
 import com.codecool.solarwatch.model.entity.Role;
@@ -12,7 +12,6 @@ import com.codecool.solarwatch.repository.MemberRepository;
 import com.codecool.solarwatch.repository.RoleRepository;
 import com.codecool.solarwatch.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 public class AuthenticationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final JwtUtils jwtUtils;
     private MemberRepository memberRepository;
@@ -61,7 +60,7 @@ public class AuthenticationService {
             member.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
             Set<Role> roles = new HashSet<>();
-            Role role = roleRepository.findByName("ROLE_USER").orElseThrow(
+            Role role = roleRepository.findByName("USER").orElseThrow(
                     () -> new RuntimeException("Default role ROLE_USER not found in database"));
             roles.add(role);
 
@@ -92,8 +91,12 @@ public class AuthenticationService {
 
     }
 
-    public String me() {
+    public MemberResponse me() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return "Hello " + user.getUsername();
+        MemberResponse memberResponse = new MemberResponse();
+        memberResponse.setUsername(user.getUsername());
+        memberResponse.setPassword(user.getPassword());
+        memberResponse.setRoles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()));
+        return memberResponse;
     }
 }
