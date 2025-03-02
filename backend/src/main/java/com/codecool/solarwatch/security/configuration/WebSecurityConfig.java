@@ -6,6 +6,7 @@ import com.codecool.solarwatch.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -58,17 +59,16 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-    // Ez az osztály felelős azért, hogy a jelszavakat:
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder(); // Titkosítsa, mielőtt eltárolja.
-//    }                                       // Összehasonlítsa, amikor a felhasználó bejelentkezik.
-
-
+//     Ez az osztály felelős azért, hogy a jelszavakat:
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+        return new BCryptPasswordEncoder(); // Titkosítsa, mielőtt eltárolja.
+    }                                       // Összehasonlítsa, amikor a felhasználó bejelentkezik.
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -76,8 +76,9 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("user/**").permitAll()
-                                .requestMatchers("/solarwatch").hasRole("USER")
+                        auth.requestMatchers("/user/me").authenticated()
+                                .requestMatchers("user/**").permitAll()
+                                .requestMatchers("/solarwatch").authenticated()
                                 .requestMatchers("/city/read").hasRole("ADMIN")
                                 .requestMatchers("/city/create").hasRole("ADMIN")
                                 .requestMatchers("/city/update").hasRole("ADMIN")
@@ -86,6 +87,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/sunrise-sunset/create").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/update").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/delete").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.OPTIONS,  "/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()
 
