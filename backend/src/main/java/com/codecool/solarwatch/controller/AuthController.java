@@ -7,7 +7,6 @@ import com.codecool.solarwatch.security.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class AuthController {

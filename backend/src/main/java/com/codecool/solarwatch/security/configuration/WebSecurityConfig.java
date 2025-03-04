@@ -19,16 +19,21 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-    private final UserDetailsService userDetailsService; //Egy szolgáltatás, ami a felhasználók adatait kezeli (pl. adatbázisból).
+    private final UserDetailsService userDetailsService;
 
-    private final AuthEntryPointJwt unauthorizedHandler; // Egy osztály, ami kezeli a hibás bejelentkezéseket (pl. ha rossz jelszót írnak be).
+    private final AuthEntryPointJwt unauthorizedHandler;
 
-    private final JwtUtils jwtUtils; // Egy segédosztály, ami kezeli a JWT tokent (létrehozás, ellenőrzés stb.).
+    private final JwtUtils jwtUtils;
 
     @Autowired
     public WebSecurityConfig(UserDetailsService userDetailsService, AuthEntryPointJwt unauthorizedHandler, JwtUtils jwtUtils) {
@@ -37,53 +42,44 @@ public class WebSecurityConfig {
         this.jwtUtils = jwtUtils;
     }
 
-    // Minden bejövő kérésnél ez a filter megnézi, hogy a felhasználó érvényes tokent küldött-e.
-    public AuthTokenFilter authenticationJwtTokenFilter() { // AuthTokenFilter egy saját osztály, ami minden bejövő kérést ellenőriz, hogy van-e érvényes JWT token
-        return new AuthTokenFilter(jwtUtils, userDetailsService); // Ehhez szüksége van: 1. jwtUtils → A JWT token kezelésére 2. userDetailsService → Hogy a tokenből kiolvassa a felhasználói adatokat.
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter(jwtUtils, userDetailsService);
     }
 
-    //Ez biztosítja, hogy ha egy felhasználó be akar lépni, akkor:
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService); // 1. Lekérdezi az adatait az adatbázisból (userDetailsService).
-        authProvider.setPasswordEncoder(passwordEncoder()); // 2. Ellenőrzi a jelszavát a titkosítással (passwordEncoder()).
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
     }
 
-    // Az AuthenticationManager az a fő osztály, ami eldönti, hogy egy felhasználó be van-e lépve vagy sem.
-    // Ha például valaki be akar lépni egy POST /login kérésben, akkor ez az osztály ellenőrzi a jelszót és eldönti, hogy sikeres-e a bejelentkezés.
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception { //AuthenticationConfiguration egy Spring osztály, ami tartalmazza az összes szükséges beállítást.
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
-//     Ez az osztály felelős azért, hogy a jelszavakat:
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Titkosítsa, mielőtt eltárolja.
-    }                                       // Összehasonlítsa, amikor a felhasználó bejelentkezik.
+        return new BCryptPasswordEncoder();
+    }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
+        http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/user/me").authenticated()
                                 .requestMatchers("user/**").permitAll()
                                 .requestMatchers("/solarwatch").authenticated()
-                                .requestMatchers("/city/read").hasRole("ADMIN")
+                                .requestMatchers("/city/read").hasRole("ADMIN") //.authenticated
                                 .requestMatchers("/city/create").hasRole("ADMIN")
                                 .requestMatchers("/city/update").hasRole("ADMIN")
                                 .requestMatchers("/city/delete").hasRole("ADMIN")
-                                .requestMatchers("/sunrise-sunset/read").hasRole("ADMIN")
+                                .requestMatchers("/sunrise-sunset/read").hasRole("ADMIN") //.authenticated
                                 .requestMatchers("/sunrise-sunset/create").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/update").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/delete").hasRole("ADMIN")
@@ -98,5 +94,19 @@ public class WebSecurityConfig {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+
+    @Bean
+    UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
