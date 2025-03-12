@@ -9,7 +9,6 @@ import com.codecool.solarwatch.model.dto.response.CityResponse;
 import com.codecool.solarwatch.model.entity.City;
 import com.codecool.solarwatch.model.entity.SunriseSunset;
 import com.codecool.solarwatch.repository.CityRepository;
-import com.codecool.solarwatch.repository.SunriseSunsetRepository;
 import com.codecool.solarwatch.service.mapper.CityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +25,6 @@ public class SolarWatchService {
     private final GeocodingService geocodingService;
     private final SunriseSunsetService sunriseSunsetService;
     private final CityRepository cityRepository;
-//    private final SunriseSunsetRepository sunriseSunsetRepository;
-    private final SunriseSunsetStorageService sunriseSunsetStorageService;
     private final CityService cityService;
     private final CityMapper cityMapper;
 
@@ -35,91 +32,116 @@ public class SolarWatchService {
             GeocodingService geocodingService,
             SunriseSunsetService sunriseSunsetService,
             CityRepository cityRepository,
-            SunriseSunsetRepository sunriseSunsetRepository,
-            SunriseSunsetStorageService sunriseSunsetStorageService, CityService cityService, CityMapper cityMapper) {
+            CityService cityService,
+            CityMapper cityMapper) {
         this.geocodingService = geocodingService;
         this.sunriseSunsetService = sunriseSunsetService;
         this.cityRepository = cityRepository;
-//        this.sunriseSunsetRepository = sunriseSunsetRepository;
-        this.sunriseSunsetStorageService = sunriseSunsetStorageService;
         this.cityService = cityService;
         this.cityMapper = cityMapper;
     }
 
+    /**
+     * Fetches sunrise/sunset data for a city and date.
+     *
+     * @param cityName The city name.
+     * @param date     The requested date.
+     * @return Optional SolarWatchResponse containing sunrise/sunset times.
+     */
     public Optional<SolarWatchResponse> getSunriseSunset(String cityName, LocalDate date) {
         logger.info("Getting sunrise sunset for city: {}, date: {}", cityName, date);
 
-        //Check if city exists in the database
-        Optional<City> cityOptional = cityRepository.findByName(cityName);
+        // Fetch city from DB or API
+        City city = cityRepository.findByName(cityName)
+                .orElseGet(() -> fetchAndSaveCity(cityName));
 
-        City city;
-        if (cityOptional.isPresent()) {
-            city = cityOptional.get();
-            logger.info("City {} found in database.", city.getName());
-        } else {
-            logger.info("City {} not found in database. Fetching from API...", cityName);
-            Optional<GeocodingResponse> geocodingResponse = geocodingService.getCoordinates(cityName);
-
-            if (geocodingResponse.isEmpty()) {
-                throw new CityNotFoundException(cityName);
-            }
-
-            //Save new city to database
-            CityResponse cityResponse = cityService.addCity(new CityCreationRequest(
-                    cityName,
-                    geocodingResponse.get().lon(),
-                    geocodingResponse.get().lat(),
-                    geocodingResponse.get().country()
-            ));
-            city = cityMapper.mapToCity(cityResponse);
-            logger.info("City {} saved in database.", cityName);
+        // Check if sunrise/sunset data exists in DB for this date
+        Optional<SunriseSunset> existingSunriseSunset = getExistingSunriseSunset(city, date);
+        if (existingSunriseSunset.isPresent()) {
+            logger.info("Returning cached sunrise/sunset data for city {}, date {}", cityName, date);
+            return Optional.of(mapToSolarWatchResponse(city, date, existingSunriseSunset.get()));
         }
 
-        //Check if sunrise/sunset data exists for the given date
-        Optional<SunriseSunset> existingSunriseSunset = city.getSunriseSunsets().stream()
+        // Fetch from API if not found
+        SunriseSunset newSunriseSunset = fetchAndSaveSunriseSunset(city, date);
+        return Optional.of(mapToSolarWatchResponse(city, date, newSunriseSunset));
+    }
+
+    /**
+     * Fetches a city from the Geocoding API and saves it in the database.
+     *
+     * @param cityName The city name.
+     * @return The newly saved City entity.
+     */
+    private City fetchAndSaveCity(String cityName) {
+        logger.info("City {} not found in database. Fetching from API...", cityName);
+        GeocodingResponse geocodingResponse = geocodingService.getCoordinates(cityName)
+                .orElseThrow(() -> new CityNotFoundException(cityName));
+
+        CityResponse cityResponse = cityService.addCity(new CityCreationRequest(
+                cityName,
+                geocodingResponse.lon(),
+                geocodingResponse.lat(),
+                geocodingResponse.country()
+        ));
+        City city = cityMapper.mapToCity(cityResponse);
+        logger.info("City {} saved in database.", cityName);
+        return city;
+    }
+
+    /**
+     * Retrieves sunrise/sunset data from the database if it exists.
+     *
+     * @param city The city entity.
+     * @param date The requested date.
+     * @return Optional SunriseSunset entity.
+     */
+    private Optional<SunriseSunset> getExistingSunriseSunset(City city, LocalDate date) {
+        return city.getSunriseSunsets().stream()
                 .filter(ss -> ss.getDate().equals(date))
                 .findFirst();
+    }
 
-        if (existingSunriseSunset.isPresent()) {
-            logger.info("Sunrise/sunset data found in database for city {}, date {}", cityName, date);
-            SunriseSunset sunriseSunset = existingSunriseSunset.get();
-            return Optional.of(new SolarWatchResponse(
-                    city.getName(),
-                    date,
-                    sunriseSunset.getSunrise(),
-                    sunriseSunset.getSunset()
-            ));
-        }
+    /**
+     * Fetches sunrise/sunset data from an external API and saves it.
+     *
+     * @param city The city entity.
+     * @param date The requested date.
+     * @return The saved SunriseSunset entity.
+     */
+    private SunriseSunset fetchAndSaveSunriseSunset(City city, LocalDate date) {
+        logger.info("Fetching sunrise/sunset data from API for city {}, date {}", city.getName(), date);
+        SunriseSunsetResponse sunriseSunsetResponse = sunriseSunsetService.getSunriseSunset(
+                        city.getLatitude(), city.getLongitude(), date)
+                .orElseThrow(() -> new CityNotFoundException(city.getName()));
 
-        //Fetch from API if data is missing
-        logger.info("Sunrise/sunset data not found in database. Fetching from API...");
-        Optional<SunriseSunsetResponse> sunriseSunsetResponse = sunriseSunsetService.getSunriseSunset(
-                city.getLatitude(), city.getLongitude(), date);
-
-        if (sunriseSunsetResponse.isEmpty()) {
-            logger.warn("Sunrise/sunset data not found for city: {}", cityName);
-            return Optional.empty();
-        }
-
-        //Save fetched sunrise/sunset data to database
         SunriseSunset newSunriseSunset = new SunriseSunset(
                 date,
-                sunriseSunsetResponse.get().results().sunrise(),
-                sunriseSunsetResponse.get().results().sunset()
+                sunriseSunsetResponse.results().sunrise(),
+                sunriseSunsetResponse.results().sunset()
         );
 
-
-//        sunriseSunsetStorageService.save(newSunriseSunset);
         city.getSunriseSunsets().add(newSunriseSunset);
         cityRepository.save(city);
 
-        logger.info("Sunrise/sunset data saved for city: {}, date: {}", cityName, date);
+        logger.info("Sunrise/sunset data saved for city {}, date {}", city.getName(), date);
+        return newSunriseSunset;
+    }
 
-        return Optional.of(new SolarWatchResponse(
+    /**
+     * Converts SunriseSunset entity to SolarWatchResponse DTO.
+     *
+     * @param city           The city entity.
+     * @param date           The requested date.
+     * @param sunriseSunset  The sunrise/sunset entity.
+     * @return The mapped SolarWatchResponse DTO.
+     */
+    private SolarWatchResponse mapToSolarWatchResponse(City city, LocalDate date, SunriseSunset sunriseSunset) {
+        return new SolarWatchResponse(
                 city.getName(),
                 date,
-                newSunriseSunset.getSunrise(),
-                newSunriseSunset.getSunset()
-        ));
+                sunriseSunset.getSunrise(),
+                sunriseSunset.getSunset()
+        );
     }
 }

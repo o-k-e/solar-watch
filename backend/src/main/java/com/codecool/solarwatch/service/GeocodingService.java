@@ -33,9 +33,6 @@ public class GeocodingService {
             return Optional.empty();
         }
 
-//        List<GeocodingResponse> responseList = Arrays.asList(responseArray);
-//        return Optional.of(responseList.get(0));
-
         return Optional.of(responseArray[0]);
     }
 

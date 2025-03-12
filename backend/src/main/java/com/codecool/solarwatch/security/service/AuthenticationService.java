@@ -85,7 +85,9 @@ public class AuthenticationService {
 
         User userDetails = (User) authentication.getPrincipal();
         String username = userDetails.getUsername();
-        Set<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+        Set<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
 
         return ResponseEntity.ok(new JwtResponse(jwt, username, roles));
 
