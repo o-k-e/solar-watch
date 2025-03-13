@@ -1,4 +1,4 @@
-package com.codecool.solarwatch.integration;
+package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.model.entity.City;
 import com.codecool.solarwatch.model.entity.SunriseSunset;
