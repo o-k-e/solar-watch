@@ -1,0 +1,143 @@
+package com.codecool.solarwatch.service;
+
+import com.codecool.solarwatch.model.dto.request.MemberRequest;
+import com.codecool.solarwatch.model.dto.response.JwtResponse;
+import com.codecool.solarwatch.model.entity.Member;
+import com.codecool.solarwatch.model.entity.Role;
+import com.codecool.solarwatch.repository.MemberRepository;
+import com.codecool.solarwatch.repository.RoleRepository;
+import com.codecool.solarwatch.security.jwt.JwtUtils;
+import com.codecool.solarwatch.security.service.AuthenticationService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.OK;
+
+@ExtendWith(MockitoExtension.class)
+public class AuthenticationServiceTest {
+
+    @Mock
+    private MemberRepository memberRepository;
+
+    @Mock
+    private RoleRepository roleRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
+
+    @Mock
+    private JwtUtils jwtUtils;
+
+    @Mock
+    private Authentication authentication;
+
+    @Mock
+    private User userDetails;
+
+    @InjectMocks
+    private AuthenticationService authenticationService;
+
+    private Member testMember;
+    private MemberRequest testRequest;
+    private Role userRole;
+
+    @BeforeEach
+    void setUp() {
+        testRequest = new MemberRequest("testuser", "password123");
+
+        userRole = new Role();
+        userRole.setName("USER");
+
+        testMember = new Member();
+        testMember.setUsername("testuser");
+        testMember.setPassword("encodedPassword");
+        testMember.setRoles(Set.of(userRole));
+    }
+
+    @DisplayName("Unit test - Successful registration")
+    @Test
+    void givenValidMemberRequest_whenRegister_thenReturnSuccess() {
+        //GIVEN
+        when(memberRepository.existsByUsername("testuser")).thenReturn(false);
+        when(roleRepository.findByName("USER")).thenReturn(Optional.of(userRole));
+        when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
+        when(memberRepository.save(any(Member.class))).thenReturn(testMember);
+
+        //WHEN
+        ResponseEntity<?> response = authenticationService.register(testRequest);
+
+        //THEN
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+        verify(memberRepository, times(1)).save(any(Member.class));
+    }
+
+    @DisplayName("Unit test - Registration fails if username exists")
+    @Test
+    void givenExistingUsername_whenRegister_thenReturnBadRequest() {
+        //GIVEN
+        when(memberRepository.existsByUsername("testuser")).thenReturn(true);
+
+        //WHEN
+        ResponseEntity<?> response = authenticationService.register(testRequest);
+
+        //THEN
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        verify(memberRepository, never()).save(any(Member.class));
+    }
+
+    @DisplayName("Unit test - Successful login returns JWT")
+    @Test
+    void givenValidCredentials_whenLogin_thenReturnJwtToken() {
+        // GIVEN
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+        when(authentication.getPrincipal()).thenReturn(userDetails);
+        when(userDetails.getUsername()).thenReturn("testuser");
+        when(userDetails.getAuthorities()).thenReturn(Set.of(() -> "ROLE_USER"));
+        when(jwtUtils.generateJwtToken(authentication)).thenReturn("mockedJwtToken");
+
+        // WHEN
+        ResponseEntity<JwtResponse> response = authenticationService.login(testRequest);
+
+        // THEN
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+        assertThat(Objects.requireNonNull(response.getBody()).jwt()).isEqualTo("mockedJwtToken");
+    }
+
+    @DisplayName("Unit test - Authentication fails for invalid credentials")
+    @Test
+    void givenInvalidCredentials_whenLogin_thenThrowException() {
+        // GIVEN
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new RuntimeException("Authentication failed"));
+
+        // WHEN & THEN
+        try {
+            authenticationService.login(testRequest);
+        } catch (Exception e) {
+            assertThat(e.getMessage()).isEqualTo("Authentication failed");
+        }
+    }
+}
