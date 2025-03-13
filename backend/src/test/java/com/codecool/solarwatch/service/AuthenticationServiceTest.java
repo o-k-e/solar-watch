@@ -2,6 +2,7 @@ package com.codecool.solarwatch.service;
 
 import com.codecool.solarwatch.model.dto.request.MemberRequest;
 import com.codecool.solarwatch.model.dto.response.JwtResponse;
+import com.codecool.solarwatch.model.dto.response.MemberResponse;
 import com.codecool.solarwatch.model.entity.Member;
 import com.codecool.solarwatch.model.entity.Role;
 import com.codecool.solarwatch.repository.MemberRepository;
@@ -20,12 +21,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,6 +63,9 @@ public class AuthenticationServiceTest {
     @Mock
     private User userDetails;
 
+    @Mock
+    private SecurityContextHolder securityContextHolder;
+
     @InjectMocks
     private AuthenticationService authenticationService;
 
@@ -76,7 +86,7 @@ public class AuthenticationServiceTest {
         testMember.setRoles(Set.of(userRole));
     }
 
-    @DisplayName("Unit test - Successful registration")
+    @DisplayName("Unit test - register() Successful registration")
     @Test
     void givenValidMemberRequest_whenRegister_thenReturnSuccess() {
         //GIVEN
@@ -93,7 +103,7 @@ public class AuthenticationServiceTest {
         verify(memberRepository, times(1)).save(any(Member.class));
     }
 
-    @DisplayName("Unit test - Registration fails if username exists")
+    @DisplayName("Unit test - register() Registration fails if username exists")
     @Test
     void givenExistingUsername_whenRegister_thenReturnBadRequest() {
         //GIVEN
@@ -107,7 +117,7 @@ public class AuthenticationServiceTest {
         verify(memberRepository, never()).save(any(Member.class));
     }
 
-    @DisplayName("Unit test - Successful login returns JWT")
+    @DisplayName("Unit test - login() Successful login returns JWT")
     @Test
     void givenValidCredentials_whenLogin_thenReturnJwtToken() {
         // GIVEN
@@ -126,7 +136,7 @@ public class AuthenticationServiceTest {
         assertThat(Objects.requireNonNull(response.getBody()).jwt()).isEqualTo("mockedJwtToken");
     }
 
-    @DisplayName("Unit test - Authentication fails for invalid credentials")
+    @DisplayName("Unit test - login() Authentication fails for invalid credentials")
     @Test
     void givenInvalidCredentials_whenLogin_thenThrowException() {
         // GIVEN
@@ -139,5 +149,29 @@ public class AuthenticationServiceTest {
         } catch (Exception e) {
             assertThat(e.getMessage()).isEqualTo("Authentication failed");
         }
+    }
+
+    @DisplayName("Unit test - me() Fetch authenticated user details")
+    @Test
+    void givenAuthenticatedUser_whenMe_thenReturnMemberResponse() {
+        //User data mocking
+        Set<GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority("ROLE_USER"));
+        User mockUser = new User("testuser", "encodedPassword", authorities);
+
+        // SecurityContext mocking
+        SecurityContext securityContext = mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+        when(securityContext.getAuthentication()).thenReturn(mock(Authentication.class));
+        when(securityContext.getAuthentication().getPrincipal()).thenReturn(mockUser);
+
+        //WHEN
+        MemberResponse response = authenticationService.me();
+
+        //THEN
+        assertThat(response.getUsername()).isEqualTo("testuser");
+        assertThat(response.getPassword()).isEqualTo("encodedPassword");
+        assertThat(response.getRoles()).isEqualTo(mockUser.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet()));
     }
 }
