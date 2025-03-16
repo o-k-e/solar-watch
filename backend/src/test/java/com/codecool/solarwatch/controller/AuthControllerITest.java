@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource(properties = "classpath:applicatin-test.properties")
+@TestPropertySource(properties = "classpath:application-test.properties")
 @ExtendWith(SpringExtension.class) //It enables Spring’s dependency injection and context management in JUnit 5 tests.
 public class AuthControllerITest {    //Without @ExtendWith(), @Autowired won’t work inside test classes.
 
