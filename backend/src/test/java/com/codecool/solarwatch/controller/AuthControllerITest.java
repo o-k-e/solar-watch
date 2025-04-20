@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest //elinduljon a spring, de csak teszteles miatt, pom file-ban kell a dependency hozza
 @AutoConfigureMockMvc
 @TestPropertySource(properties = "classpath:application-test.properties")
 @ExtendWith(SpringExtension.class) //It enables Spring’s dependency injection and context management in JUnit 5 tests.
