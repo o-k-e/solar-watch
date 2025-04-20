@@ -9,6 +9,7 @@ import Login from './Pages/Login.jsx'
 import Register from './Pages/Register.jsx';
 import UserProfile from './Pages/UserProfile.jsx';
 import LandingPage from "./Pages/LandingPage.jsx";
+import HomePage from "./Pages/HomePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: '/user-profile',
         element: <UserProfile />
+      },
+      {
+        path: '/home',
+        element: <HomePage />
       }
     ],
   },
