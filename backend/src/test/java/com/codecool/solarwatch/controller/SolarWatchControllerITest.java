@@ -4,7 +4,6 @@ import com.codecool.solarwatch.model.entity.City;
 import com.codecool.solarwatch.model.entity.SunriseSunset;
 import com.codecool.solarwatch.repository.CityRepository;
 import com.codecool.solarwatch.repository.SunriseSunsetRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,9 +34,6 @@ public class SolarWatchControllerITest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private CityRepository cityRepository;
