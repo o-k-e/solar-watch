@@ -21,7 +21,7 @@ const Login = () => {
     loginAPICall(loginObj)
         .then(res => {
             console.log(res)
-            localStorage.setItem("jwt", res.jwt)
+            localStorage.setItem("jwt", res.jwt);
         }).catch(error => {
             console.log(error)
         })
