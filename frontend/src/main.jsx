@@ -8,12 +8,17 @@ import Layout from './Components/Layout.jsx'
 import Login from './Pages/Login.jsx'
 import Register from './Pages/Register.jsx';
 import UserProfile from './Pages/UserProfile.jsx';
+import LandingPage from "./Pages/LandingPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
       {
         path: '/login',
         element: <Login />,
