@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginAPICall } from "../Service/AuthService";
 
@@ -7,6 +7,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLoginForm = (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const Login = () => {
         .then(res => {
             console.log(res)
             localStorage.setItem("jwt", res.jwt);
+            navigate("/home");
         }).catch(error => {
             console.log(error)
         })
