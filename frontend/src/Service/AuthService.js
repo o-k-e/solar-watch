@@ -59,11 +59,17 @@ export const loginAPICall = async (loginObj) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       return await response.json();
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
     }
-  
   };
+
+
+export const logout = async () => {
+  localStorage.removeItem("jwt");
+}
+
+export const checkLoginStatus = () => Boolean(localStorage.getItem("jwt"));
