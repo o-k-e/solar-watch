@@ -12,12 +12,12 @@ const Navbar = () => {
     }
 
     return (
-    <div className='text-left text-[#ff8c00] text-3xl p-10 bg-[#272121] flex justify-between items-center'>
+    <div className='text-left text-[#ffd369] text-3xl p-10 bg-[#091930] flex justify-between items-center'>
         <span>SolarWatch</span>
         {isLoggedIn && (
             <button
                 onClick={handleLogout}
-                className="text-[#ff8c00]"
+                className="text-[#ffd369]"
             >
                 Logout
             </button>

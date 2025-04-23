@@ -31,10 +31,10 @@ const Login = () => {
 
   return (
     <div className="relative">
-      <div className="flex justify-center items-center font-[sans-serif] h-full min-h-screen p-4 bg-[url(/public/gradient-colorful-soap-bubble-black-background.jpg)] bg-no-repeat bg-cover bg-center">
+      <div className="flex justify-center items-center font-[sans-serif] h-full min-h-screen p-4 bg-[url(/public/sunrise.jpg)] bg-no-repeat bg-cover bg-center">
         
         <div className="max-w-md w-full mx-auto">
-          <form onSubmit={handleLoginForm} className="bg-white bg-opacity-70 shadow-2xl rounded-lg p-6">
+          <form onSubmit={handleLoginForm} className="bg-opacity-25 shadow-xl rounded-lg p-6">
             <div className="mb-12">
               <h3 className="text-gray-800 text-center text-3xl font-bold">Login</h3>
             </div>
