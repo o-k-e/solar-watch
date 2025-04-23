@@ -1,4 +1,4 @@
-import axios, {options} from "axios";
+import axios from "axios";
 
 export const fetchSolarData = async (cityName, date) => {
     const jwt = localStorage.getItem("jwt");
