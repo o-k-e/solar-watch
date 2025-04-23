@@ -25,7 +25,7 @@ const HomePage = () => {
     console.log("Rendered result:", result);
 
     return (
-        <div className="min-h-screen bg-[#fdf6e3] text-gray-800 p-6">
+        <div className="min-h-screen bg-[#d0e0ed] text-gray-800 p-6">
             <h1 className="text-3xl font-bold mb-4">Welcome back, {user.username} 👋</h1>
             <p><strong>Your role:</strong> {user.roles?.map(role => role.replace('ROLE_', '')).join(', ')}</p>
 
@@ -54,13 +54,19 @@ const HomePage = () => {
             </form>
 
             {result?.sunrise && result?.sunset && (
-                <div className="mt-8 bg-white p-6 rounded shadow max-w-md">
+                <div className="mt-8 border border-[#ffd369] bg-[#1e3163] text-[#ffd369] p-6 rounded shadow max-w-md">
                     <h2 className="text-xl font-semibold mb-4">Solar Data</h2>
                     <p><strong>City:</strong> {result.city}</p>
                     <p><strong>Date:</strong> {result.date}</p>
                     <p><strong>Sunrise:</strong> {result.sunrise}</p>
                     <p><strong>Sunset:</strong> {result.sunset}</p>
                     </div>
+            )}
+
+            {user.roles?.includes("ROLE_ADMIN") && (
+                <div className="mt-10 p-4 border border-[#ffd369] rounded bg-[#1e3163] text-[#ffd369] max-w-md">
+                    <h2 className="text-lg font-semibold mb-2">Admin Panel</h2>
+                </div>
             )}
         </div>
     );
