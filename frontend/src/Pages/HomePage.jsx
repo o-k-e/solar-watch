@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {fetchUserProfile} from "../Service/AuthService.js";
 import {fetchSolarData} from "../Service/ApiService.js";
+import AdminCityTable from "../Components/AdminCityTable.jsx";
 
 const HomePage = () => {
 
@@ -25,7 +26,7 @@ const HomePage = () => {
     console.log("Rendered result:", result);
 
     return (
-        <div className="min-h-screen bg-[#d0e0ed] text-gray-800 p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#273f79] text-[#d0e0ed] p-6">
             <h1 className="text-3xl font-bold mb-4">Welcome back, {user.username} 👋</h1>
             <p><strong>Your role:</strong> {user.roles?.map(role => role.replace('ROLE_', '')).join(', ')}</p>
 
@@ -35,39 +36,52 @@ const HomePage = () => {
                     placeholder="Enter city name..."
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="px-4 py-2 border border-gray-400 rounded w-full max-w-sm"
+                    className="border  rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 "
                 />
 
                 <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="px-4 py-2 border border-gray-400 rounded w-full max-w-sm"
+                    className="border rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2"
                 />
 
                 <button
                     type="submit"
-                    className="bg-[#272121] text-white px-6 py-2 rounded hover:bg-gray-700 transition"
+                    className="bg-[#273f79] text-white px-6 py-2 rounded-md border  hover:bg-[#1e3163] hover:text-[#ffd369] focus:outline-none focus:ring-2 focus:ring-[#ffd369]"
                 >
                     Search
                 </button>
             </form>
 
             {result?.sunrise && result?.sunset && (
-                <div className="mt-8 border border-[#ffd369] bg-[#1e3163] text-[#ffd369] p-6 rounded shadow max-w-md">
-                    <h2 className="text-xl font-semibold mb-4">Solar Data</h2>
-                    <p><strong>City:</strong> {result.city}</p>
-                    <p><strong>Date:</strong> {result.date}</p>
-                    <p><strong>Sunrise:</strong> {result.sunrise}</p>
-                    <p><strong>Sunset:</strong> {result.sunset}</p>
-                    </div>
-            )}
+                <div className="w-full flex justify-center mt-8 text-white px-4">
+                    <div className="bg-[#0d1e45] rounded-2xl shadow-lg p-6 w-full max-w-xl text-center space-y-4">
 
-            {user.roles?.includes("ROLE_ADMIN") && (
-                <div className="mt-10 p-4 border border-[#ffd369] rounded bg-[#1e3163] text-[#ffd369] max-w-md">
-                    <h2 className="text-lg font-semibold mb-2">Admin Panel</h2>
+                        <h2 className="text-2xl font-semibold flex items-center justify-center gap-2">
+                            {result.city}
+                            <span>📍</span>
+                        </h2>
+
+                        <p className="text-sm text-gray-300">{result.date}</p>
+
+                        <div className="w-32 h-32 mx-auto bg-[url(/public/sun.png)] rounded-full"></div>
+
+                        <div className="flex justify-between text-lg mt-4 px-4">
+                            <div className="text-left">
+                                <p className="text-sm text-gray-300">Sunrise</p>
+                                <p className="text-xl font-bold">{result.sunrise}</p>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-sm text-gray-300">Sunset</p>
+                                <p className="text-xl font-bold">{result.sunset}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
+
+            {user.roles?.includes("ROLE_ADMIN") && <AdminCityTable />}
         </div>
     );
 }
