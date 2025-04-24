@@ -23,8 +23,8 @@ Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL bac
 ### Features
 
 The project features role-based access control:
-- Regular users can search and view solar data.
-- Admin users have additional access to view the city recores stored in the database.
+- Regular users can search and view solar data of the selected location.
+- Admin users have additional access to view the city data stored in the database.
 
 **API Providers**
 
