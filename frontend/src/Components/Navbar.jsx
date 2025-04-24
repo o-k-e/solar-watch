@@ -12,8 +12,8 @@ const Navbar = () => {
     }
 
     return (
-    <div className='text-left text-[#ffd369] text-3xl p-10 bg-[#091930]  flex justify-between items-center'>
-        <span>SolarWatch</span>
+    <div className='text-left text-[#ffd369] text-3xl px-30 bg-[#091930]  flex justify-between items-center'>
+        <img src="/logo.png" alt="SolarWatch Logo" className="h-40" />
         {isLoggedIn && (
             <button
                 onClick={handleLogout}
