@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 import { registerAPICall } from "../Service/AuthService";
 
@@ -7,6 +7,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleRegisterForm = (e) => {
     e.preventDefault();
@@ -19,8 +20,9 @@ const Register = () => {
     console.log(registerObj);
 
     registerAPICall(registerObj)
-    .then(res => {
-        console.log(res)
+    .then(()=> {
+        navigate("/login");
+
     }).catch(error => {
         console.log(error)
     })
