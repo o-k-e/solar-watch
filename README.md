@@ -85,6 +85,9 @@ npm install
 npm run dev
 ```
 
+- Frontend runs at: [http://localhost:5173](http://localhost:5173)
+- Backend runs at: [http://localhost:8080](http://localhost:8080)
+
 ## Usage
 Once the services are up and running, you can access the frontend to explore the application.
 
