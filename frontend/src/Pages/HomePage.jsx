@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {fetchUserProfile} from "../Service/AuthService.js";
-import {fetchSolarData} from "../Service/ApiService.js";
+import {fetchAllCities, fetchSolarData} from "../Service/ApiService.js";
 import AdminCityTable from "../Components/AdminCityTable.jsx";
 
 const HomePage = () => {
@@ -9,24 +9,37 @@ const HomePage = () => {
     const [ result, setResult] = useState({});
     const [ city, setCity ] = useState("");
     const [ date, setDate ] = useState("");
-
-    useEffect(() => {
-        fetchUserProfile()
-        .then(res => setUser(res))
-            .catch(err => console.error(`Could not fetch user profile:`, err));
-    }, []);
+    const [ cities, setCities ] = useState([]);
 
     const handleSearch = (e) => {
         e.preventDefault();
         fetchSolarData(city, date)
-        .then(res => setResult(res))
+        .then(res => {
+            setResult(res);
+            displayCities();
+        })
         .catch(err => console.error(`Could not fetch solar data for:`, city, err));
     }
 
-    console.log("Rendered result:", result);
+    const displayCities = () => {
+        fetchAllCities()
+        .then(res => setCities(res))
+        .catch(err => console.error(`Could not fetch cities list`, err));
+    }
+
+    useEffect(() => {
+        displayCities();
+    }, []);
+
+    useEffect(() => {
+        fetchUserProfile()
+            .then(res => setUser(res))
+            .catch(err => console.error(`Could not fetch user profile:`, err));
+    }, []);
 
     return (
-        <div className="flex flex-col items-center bg-[#273f79] text-[#d0e0ed] pt-24 pb-12 px-6 min-h-screen">            <h1 className="text-3xl font-bold mb-4">Welcome back, {user.username} 👋</h1>
+        <div className="flex flex-col items-center bg-[#273f79] text-[#d0e0ed] pt-24 pb-12 px-6 min-h-screen">
+            <h1 className="text-3xl font-bold mb-4">Welcome back, {user.username} 👋</h1>
             <p><strong>Your role:</strong> {user.roles?.map(role => role.replace('ROLE_', '')).join(', ')}</p>
 
             <form onSubmit={handleSearch} className="mt-8 flex gap-4">
@@ -81,7 +94,7 @@ const HomePage = () => {
                 </div>
             )}
 
-            {user.roles?.includes("ROLE_ADMIN") && <AdminCityTable />}
+            {user.roles?.includes("ROLE_ADMIN") && <AdminCityTable cities={cities} />}
         </div>
     );
 }

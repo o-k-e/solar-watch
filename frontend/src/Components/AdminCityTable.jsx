@@ -1,15 +1,4 @@
-import {useEffect, useState} from "react";
-import {fetchAllCities} from "../Service/ApiService.js";
-
-const AdminCityTable = () => {
-
-    const [cities, setCities] = useState([]);
-
-    useEffect(() => {
-        fetchAllCities()
-            .then(data => setCities(data))
-            .catch(error => console.log("Could not load city list", error));
-    }, [])
+const AdminCityTable = ({ cities }) => {
 
     return (
         <>
