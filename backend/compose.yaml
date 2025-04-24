@@ -20,3 +20,12 @@ services:
     environment:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
+
+  frontend:
+    build:
+      context: ../frontend
+    ports:
+      - "4173:4173"
+    container_name: frontend
+    depends_on:
+      - app
