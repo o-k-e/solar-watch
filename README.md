@@ -102,6 +102,8 @@ On the website, you can:
 
 <img width="861" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/622b8b2a-1dcf-4d95-be2f-12d61821755c" />
 
+<img width="859" alt="SolarWatch-homepage-user" src="https://github.com/user-attachments/assets/60cff95c-8b28-48af-b9d3-c701c0a44f0c" />
+
 ## Acknowledgments
 
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template) for inspiration
