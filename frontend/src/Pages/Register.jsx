@@ -17,8 +17,6 @@ const Register = () => {
         password: password
     };
 
-    console.log(registerObj);
-
     registerAPICall(registerObj)
     .then(()=> {
         navigate("/login");
