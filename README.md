@@ -32,9 +32,9 @@ Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL bac
 
 ### Features
 
-<img width="996" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/4b126bfa-0d54-4019-9372-08968a12db91" />
+<img width="858" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/cd1f23ac-4150-4714-87c7-1a2e25af0386" />
 
-<img width="999" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/9438c17d-7b1b-4794-91d6-f8b90807eb75" />
+<img width="854" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/3dddbdeb-d38d-4567-9bfd-77d83be49644" />
 
 ## Built With
 
@@ -72,12 +72,12 @@ Make sure you have the following installed:
    
 2. **Clone the repository** to your machine by executing the command git clone https://github.com/o-k-e/solar-watch.git in your **terminal**, then start the application locally.
   
-4. ## Backend (Spring Boot)
+4. **Backend (Spring Boot)**
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
-5. ## Frontend (React + Vite)
+5. **Frontend (React + Vite)**
 ```bash
 cd frontend
 npm install
@@ -94,9 +94,9 @@ On the website, you can:
 - **View solar information** displayed in a clear and easy-to-read format.
 - **Admin users** can view the list of cities stored in the database.
  
-<img width="1001" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/90a7de1a-9193-45a8-922b-cf080f9f810c" />
+<img width="851" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/0f311e48-e4bf-400a-88db-bf739d08773b" />
 
-<img width="999" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/8ac7bbc1-dbb4-443d-854b-82469c5b9435" />
+<img width="854" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/9742abfe-9267-4392-906a-efce5be0823f" />
 
 ## Acknowledgments
 
