@@ -75,11 +75,11 @@ public class WebSecurityConfig {
                         auth.requestMatchers("/user/me").authenticated()
                                 .requestMatchers("user/**").permitAll()
                                 .requestMatchers("/solarwatch").authenticated()
-                                .requestMatchers("/city/read").hasRole("ADMIN") //.authenticated
+                                .requestMatchers("/city/read").hasRole("ADMIN")
                                 .requestMatchers("/city/create").hasRole("ADMIN")
                                 .requestMatchers("/city/update").hasRole("ADMIN")
                                 .requestMatchers("/city/delete").hasRole("ADMIN")
-                                .requestMatchers("/sunrise-sunset/read").hasRole("ADMIN") //.authenticated
+                                .requestMatchers("/sunrise-sunset/read").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/create").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/update").hasRole("ADMIN")
                                 .requestMatchers("/sunrise-sunset/delete").hasRole("ADMIN")
