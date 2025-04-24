@@ -1,43 +1,32 @@
+import axios from "axios";
+
 const AUTH_REST_API_BASE_URL = "http://localhost:8080/user";
 
 export const registerAPICall = async (registerObj) => {
   try {
-    const response = await fetch(`${AUTH_REST_API_BASE_URL}/register`, {
-      method: "POST",
+    const response = await axios.post(`${AUTH_REST_API_BASE_URL}/register`, registerObj, {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(registerObj),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    return await response.json();
+    return response.data;
   } catch (error) {
     console.error("Registration failed:", error);
     throw error;
   }
-
 };
 
 
 export const loginAPICall = async (loginObj) => {
     try {
-      const response = await fetch(`${AUTH_REST_API_BASE_URL}/login`, {
-        method: "POST",
+      const response = await axios.post(`${AUTH_REST_API_BASE_URL}/login`, loginObj, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginObj),
       });
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      return await response.json();
+      return response.data;
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
@@ -47,20 +36,15 @@ export const loginAPICall = async (loginObj) => {
 
   export const fetchUserProfile = async () => {
     try {
-      const response = await fetch(`${AUTH_REST_API_BASE_URL}/me`, {
-        method: "GET",
+      const response = await axios.get(`${AUTH_REST_API_BASE_URL}/me`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + localStorage.getItem("jwt")
         },
-        credentials: "include"
+        withCredentials: true,
       });
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
 
-      return await response.json();
+      return response.data;
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
