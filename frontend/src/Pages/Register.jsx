@@ -28,8 +28,8 @@ const Register = () => {
 
   return (
     <div className="relative">
-      <div className="flex justify-center items-center font-[sans-serif] h-full min-h-screen p-4 bg-[url(/public/sunrise.jpg)] bg-no-repeat bg-cover bg-center">
-        
+      <div className="flex justify-center font-[sans-serif] min-h-screen pt-24 pb-10 px-4 bg-[#091930] bg-no-repeat bg-cover bg-center">
+
         <div className="max-w-md w-full mx-auto">
           <form onSubmit={handleRegisterForm} className="bg-white bg-opacity-70 shadow-2xl rounded-lg p-6">
             <div className="mb-12">
