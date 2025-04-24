@@ -23,8 +23,8 @@ Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL bac
 ### Features
 
 The project features role-based access control:
-- Regular users can search and view solar data.
-- Admin users have additional access to view the city recores stored in the database.
+- Regular users can search and view solar data of the selected location.
+- Admin users have additional access to view the city data stored in the database.
 
 **API Providers**
 
@@ -33,9 +33,9 @@ The project features role-based access control:
 - 🌅 [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)
   Provides accurate sunrise and sunset times for a given location and date.
 
-<img width="858" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/cd1f23ac-4150-4714-87c7-1a2e25af0386" />
+<img width="860" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/f1f53d91-c8f1-438b-afa9-8b935bc8514c" />
 
-<img width="854" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/3dddbdeb-d38d-4567-9bfd-77d83be49644" />
+<img width="861" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/a59365f0-1464-449a-af98-686311c5b2e9" />
 
 ## Built With
 
@@ -98,9 +98,11 @@ On the website, you can:
 - **View solar information** displayed in a clear and easy-to-read format.
 - **Admin users** can view the list of cities stored in the database.
  
-<img width="851" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/0f311e48-e4bf-400a-88db-bf739d08773b" />
+<img width="862" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/4a0feb15-8305-42e1-8c46-537efd92968f" />
 
-<img width="854" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/9742abfe-9267-4392-906a-efce5be0823f" />
+<img width="861" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/622b8b2a-1dcf-4d95-be2f-12d61821755c" />
+
+<img width="859" alt="SolarWatch-homepage-user" src="https://github.com/user-attachments/assets/60cff95c-8b28-48af-b9d3-c701c0a44f0c" />
 
 ## Acknowledgments
 
