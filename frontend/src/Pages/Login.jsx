@@ -17,8 +17,6 @@ const Login = () => {
         password: password
     };
 
-    console.log(loginObj);
-
     loginAPICall(loginObj)
         .then(res => {
             console.log(res)

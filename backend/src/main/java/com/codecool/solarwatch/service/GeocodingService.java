@@ -27,7 +27,6 @@ public class GeocodingService {
         logger.info("Calling GEO API URL: {}", url);
 
         GeocodingResponse[] responseArray = restTemplate.getForObject(url, GeocodingResponse[].class);
-        //restTemplate.exchange() utananezni
 
         if (responseArray == null || responseArray.length == 0) {
             logger.warn("No coordinates found for city: {}", city);

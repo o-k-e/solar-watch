@@ -46,10 +46,6 @@ public class CityService {
         }
     }
 
-    public Optional<City> getCityByName(String name) {
-        return cityRepository.findByName(name);
-    }
-
     public CityResponse addCity(CityCreationRequest city) {
         log.info("1. Creating city name: {}, country: {}", city.getName(), city.getCountry());
         City savedCity = cityRepository.save(cityMapper.mapToCity(city));

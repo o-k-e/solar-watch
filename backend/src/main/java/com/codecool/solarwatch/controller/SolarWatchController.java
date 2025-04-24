@@ -39,21 +39,4 @@ public class SolarWatchController {
 
         return response.orElseThrow(() -> new CityNotFoundException(city));
     }
-
-//    public ResponseEntity<SolarWatchResponse> getSunriseSunset(
-//            @RequestParam String city,
-//            @RequestParam(required = false) LocalDate date) {
-//
-//        if (date == null) {
-//            date = LocalDate.now();
-//        }
-//
-//        logger.info("Received request for city: {}, date: {}", city, date);
-//
-//        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset(city, date);
-//
-//        return response
-//                .map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.badRequest().build());
-//    }
 }
