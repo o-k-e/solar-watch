@@ -13,7 +13,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className='text-[#ffd369] text-3xl px-30 bg-[#091930]  flex justify-between items-center'>
+        <div className='text-[#ffd369] text-3xl px-30 bg-[#0d1e45]  flex justify-between items-center'>
             <Link to="/home">
                 <img src="/logo.png" alt="SolarWatch Logo" className="h-40" />
             </Link>
