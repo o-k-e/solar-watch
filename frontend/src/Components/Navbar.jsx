@@ -1,5 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {checkLoginStatus, logout} from "../Service/AuthService.js";
+import { FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
 
@@ -19,7 +20,7 @@ const Navbar = () => {
                 onClick={handleLogout}
                 className="text-[#ffd369]"
             >
-                Logout
+                <FiLogOut />
             </button>
         )}
 
