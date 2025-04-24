@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {checkLoginStatus, logout} from "../Service/AuthService.js";
 import { FiLogOut } from "react-icons/fi";
 
@@ -13,19 +13,21 @@ const Navbar = () => {
     }
 
     return (
-    <div className='text-left text-[#ffd369] text-3xl px-30 bg-[#091930]  flex justify-between items-center'>
-        <img src="/logo.png" alt="SolarWatch Logo" className="h-40" />
-        {isLoggedIn && (
-            <button
-                onClick={handleLogout}
-                className="text-[#ffd369]"
-            >
-                <FiLogOut />
-            </button>
-        )}
+        <div className='text-[#ffd369] text-3xl px-30 bg-[#091930]  flex justify-between items-center'>
+            <Link to="/home">
+                <img src="/logo.png" alt="SolarWatch Logo" className="h-40" />
+            </Link>
 
-    </div>
-  )
+            {isLoggedIn && (
+                <button
+                    onClick={handleLogout}
+                    className="text-[#ffd369]"
+                >
+                    <FiLogOut />
+                </button>
+            )}
+        </div>
+    )
 }
 
 export default Navbar;
