@@ -27,11 +27,11 @@ The project features role-based access control:
 - Admin users have additional access to view the city recores stored in the database.
 
 **API Providers**
+
 - 🌍 [OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api)
   Used to convert city names into geographic coordinates (latitude & longitude).
 - 🌅 [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)
   Provides accurate sunrise and sunset times for a given location and date.
-
 
 <img width="858" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/cd1f23ac-4150-4714-87c7-1a2e25af0386" />
 
