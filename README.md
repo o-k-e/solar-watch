@@ -18,19 +18,20 @@
 
 SolarWatch is a full-stack web application that allows users to search for the sunrise and sunset times of any city on a specific date. It integrates external APIs ([OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api) and [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)) and presents the results in a clean and modern desktop layout.
 
+Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL backend, the app is fully containerized using Docker for smooth local setup and deployment.
+
+### Features
+
 The project features role-based access control:
 - Regular users can search and view solar data.
 - Admin users have additional access to view the city recores stored in the database.
 
-Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL backend, the app is fully containerized using Docker for smooth local setup and deployment.
-
-#### API Providers
+**API Providers**
 - 🌍 [OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api)
   Used to convert city names into geographic coordinates (latitude & longitude).
 - 🌅 [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)
   Provides accurate sunrise and sunset times for a given location and date.
 
-### Features
 
 <img width="858" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/cd1f23ac-4150-4714-87c7-1a2e25af0386" />
 
