@@ -73,17 +73,7 @@ Make sure you have the following installed:
    
 2. **Clone the repository** to your machine by executing the command git clone https://github.com/o-k-e/solar-watch.git in your **terminal**, then start the application locally.
   
-4. **Backend (Spring Boot)**
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-5. **Frontend (React + Vite)**
-```bash
-cd frontend
-npm install
-npm run dev
-```
+
 
 - Frontend runs at: [http://localhost:5173](http://localhost:5173)
 - Backend runs at: [http://localhost:8080](http://localhost:8080)
