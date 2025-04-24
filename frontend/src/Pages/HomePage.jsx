@@ -26,8 +26,7 @@ const HomePage = () => {
     console.log("Rendered result:", result);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#273f79] text-[#d0e0ed] p-6">
-            <h1 className="text-3xl font-bold mb-4">Welcome back, {user.username} 👋</h1>
+        <div className="flex flex-col items-center bg-[#273f79] text-[#d0e0ed] pt-24 pb-12 px-6 min-h-screen">            <h1 className="text-3xl font-bold mb-4">Welcome back, {user.username} 👋</h1>
             <p><strong>Your role:</strong> {user.roles?.map(role => role.replace('ROLE_', '')).join(', ')}</p>
 
             <form onSubmit={handleSearch} className="mt-8 flex gap-4">
