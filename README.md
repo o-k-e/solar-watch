@@ -33,9 +33,9 @@ The project features role-based access control:
 - 🌅 [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)
   Provides accurate sunrise and sunset times for a given location and date.
 
-<img width="860" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/f1f53d91-c8f1-438b-afa9-8b935bc8514c" />
+<img width="865" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/503a67ad-0f97-4ee2-beea-5a3455225a5a" />
 
-<img width="861" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/a59365f0-1464-449a-af98-686311c5b2e9" />
+<img width="865" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/6006f37e-bb6a-468b-98cc-b87709907718" />
 
 ## Built With
 
@@ -98,11 +98,11 @@ On the website, you can:
 - **View solar information** displayed in a clear and easy-to-read format.
 - **Admin users** can view the list of cities stored in the database.
  
-<img width="862" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/4a0feb15-8305-42e1-8c46-537efd92968f" />
+<img width="863" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/03005ec8-a5e1-4d75-bab4-39bd6266876b" />
 
-<img width="861" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/622b8b2a-1dcf-4d95-be2f-12d61821755c" />
+<img width="865" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/cb8a0ee5-1657-4169-900b-fda22a3c2365" />
 
-<img width="859" alt="SolarWatch-homepage-user" src="https://github.com/user-attachments/assets/60cff95c-8b28-48af-b9d3-c701c0a44f0c" />
+<img width="865" alt="SolarWatch-homepage-user" src="https://github.com/user-attachments/assets/f3df7739-de01-43d7-9787-a90dbc2e7cad" />
 
 ## Acknowledgments
 
