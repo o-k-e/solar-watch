@@ -64,7 +64,8 @@ const HomePage = () => {
 
                         <p className="text-sm text-gray-300">{result.date}</p>
 
-                        <div className="w-32 h-32 mx-auto bg-[url(/sun.png)] rounded-full"></div>
+                        <div className="w-32 h-32 mx-auto bg-[url(/sun.png)] rounded-full">
+                        </div>
 
                         <div className="flex justify-between text-lg mt-4 px-4">
                             <div className="text-left">
