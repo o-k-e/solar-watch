@@ -10,12 +10,29 @@
   - [Prerequisites](#prerequisites)
   - [Installation Steps](#installation-steps)
 - [Usage](#usage)
+- [Acknowledgments](#acknowledgments)
   
 </details>
 
 ## About The Project
 
+SolarWatch is a full-stack web application that allows users to search for the sunrise and sunset times of any city on a specific date. It integrates external APIs ([OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api) and [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)) and presents the results in a clean and modern desktop layout.
+
+The project features role-based access control:
+- Regular users can search and view solar data.
+- Admin users have additional access to view the city recores stored in the database.
+
+Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL backend, the app is fully containerized using Docker for smooth local setup and deployment.
+
+#### API Providers
+- 🌍 [OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api)
+  Used to convert city names into geographic coordinates (latitude & longitude).
+- 🌅 [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)
+  Provides accurate sunrise and sunset times for a given location and date.
+
 ### Features
+
+<img width="996" alt="SolarWatch-landingpage" src="https://github.com/user-attachments/assets/4b126bfa-0d54-4019-9372-08968a12db91" />
 
 <img width="999" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/9438c17d-7b1b-4794-91d6-f8b90807eb75" />
 
@@ -53,7 +70,43 @@ Make sure you have the following installed:
 
 1. Open a **terminal** and navigate to the directory where you would like to save the repository.
    
-2. **Clone the repository** to your machine by executing the command git clone https://............. your **terminal**, then proceed with one of the installation  options below.
+2. **Clone the repository** to your machine by executing the command git clone https://github.com/o-k-e/solar-watch.git in your **terminal**, then start the application locally.
+  
+4. ## Backend (Spring Boot)
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+5. ## Frontend (React + Vite)
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## Usage
-No starter code is provided. Start from scratch!
+Once the services are up and running, you can access the frontend to explore the application.
+
+On the website, you can:
+
+- **Log in** to your account for a personalized experience.
+- **Search for sunrise and sunset times** by entering a city and a specific date.
+- **View solar information** displayed in a clear and easy-to-read format.
+- **Admin users** can view the list of cities stored in the database.
+ 
+<img width="1001" alt="SolarWatch-login" src="https://github.com/user-attachments/assets/90a7de1a-9193-45a8-922b-cf080f9f810c" />
+
+<img width="999" alt="SolarWatch-homepage" src="https://github.com/user-attachments/assets/8ac7bbc1-dbb4-443d-854b-82469c5b9435" />
+
+## Acknowledgments
+
+- [Best-README-Template](https://github.com/othneildrew/Best-README-Template) for inspiration
+- 🛡️ [Shields.io](https://shields.io) for the badges
+- ⚛️ [React Icons](https://react-icons.github.io/react-icons) for popular icon packs as React components 
+- 🌍 [OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api)  
+- 🌅 [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)  
+
+
+
+
+ 
