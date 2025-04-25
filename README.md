@@ -5,7 +5,7 @@
   
 - [About the Project](#about-the-project)
 - [Built With](#built-with)
-- [Contributors](#contributors)
+- [Contact](#contact)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation Steps](#installation-steps)
@@ -53,16 +53,15 @@ The project features role-based access control:
 - **Containerization:**  
   [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)  
 
-## Contributors
+## Contact
 
-- [Erika Oláhné Klár](https://github.com/o-k-e) - (https://github.com/o-k-e)
-
+- Erika Oláhné Klár [![GitHub](https://img.shields.io/badge/GitHub-%2312100E.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/o-k-e)  [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/erika-olahne-klar/)
+  
 ## Getting Started
 
 To get a local copy up and running, follow these steps:
 
 ### Prerequisites
-#### With Docker (recommended)
 
 Make sure you have the following installed:
 ### Docker Desktop  
