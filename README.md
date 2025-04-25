@@ -53,30 +53,63 @@ The project features role-based access control:
 - **Containerization:**  
   [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)  
 
+## Contributors
+
+- [Erika Oláhné Klár](https://github.com/o-k-e) - (https://github.com/o-k-e)
+
 ## Getting Started
 
 To get a local copy up and running, follow these steps:
 
 ### Prerequisites
+#### With Docker (recommended)
 
 Make sure you have the following installed:
-
-- **Java 23**
-- **Node.js 18+**
-- **PostgreSQL 14+**
-- **Maven**
-- **Docker** (*optional*)
+### Docker Desktop  
+[https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)  
+Tip: After installation, **start Docker Desktop** to ensure `docker` commands work.
 
 ### Installation Steps
 
 1. Open a **terminal** and navigate to the directory where you would like to save the repository.
    
-2. **Clone the repository** to your machine by executing the command git clone https://github.com/o-k-e/solar-watch.git in your **terminal**, then start the application locally.
+2. **Clone the repository** to your machine by executing the command `git clone https://github.com/o-k-e/solar-watch.git` in your **terminal**.
+   
+3. **Configure Environment Variables**
+      Before starting the app, **create** a `.env` file **inside the backend folder** containing the following environment variables:
+      
+      ```env
+      DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
+      DATABASE_USERNAME=your_username
+      DATABASE_PASSWORD=your_password
+      JWT_SECRET=your_secret
+      JWT_EXPIRATION=time_in_ms
+      ```
+      
+      Replace your_username, your_password, and your_secret with your actual credentials.
+      ```bash
+      DATABASE_USERNAME example: `DATABASE_USERNAME=progres`
+      DATABASE_PASSWORD example: `DATABASE_PASSWORD=progres`
+      JWT_SECRET example: `JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN`
+      JWT_EXPIRATION example (48 hour): `JWT_EXPIRATION=8640000`
+      ```
+      
+5. **Ensure Docker is Running**
+     Start **Docker Desktop**
+     
+6. **Build and run the containers**
+     Execute the command in the backend folder:
+     ```bash
+     docker compose up --build
+     ```
+
+7. **Access the Application**
+     Open your browser and visit: [http://localhost:4173](http://localhost:4173)
   
-
-
-- Frontend runs at: [http://localhost:5173](http://localhost:5173)
-- Backend runs at: [http://localhost:8080](http://localhost:8080)
+8. **Stopping the application**
+    To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
+     ```bash
+     docker-compose down
 
 ## Usage
 Once the services are up and running, you can access the frontend to explore the application.
