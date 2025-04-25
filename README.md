@@ -64,7 +64,7 @@ To get a local copy up and running, follow these steps:
   
   This project uses **Docker** for containerized development.
   
-  To install everything you need, just download **Docker Desktop**:
+  To install everything you need, just download `Docker Desktop`:
   
   - [Docker Desktop for Windows/macOS](https://www.docker.com/products/docker-desktop)
     
@@ -83,31 +83,29 @@ To get a local copy up and running, follow these steps:
       DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
       DATABASE_USERNAME=your_username
       DATABASE_PASSWORD=your_password
-      JWT_SECRET=your_secret
-      JWT_EXPIRATION=time_in_ms
+      JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN
+      JWT_EXPIRATION=8640000
       ```
       
-      Replace your_username, your_password, and your_secret with your actual credentials.
-      ```bash
-      DATABASE_USERNAME example: `DATABASE_USERNAME=progres`
-      DATABASE_PASSWORD example: `DATABASE_PASSWORD=progres`
-      JWT_SECRET example: `JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN`
-      JWT_EXPIRATION example (48 hour): `JWT_EXPIRATION=8640000`
-      ```
+      Replace `your_username`, `your_password` with your actual credentials.
 
-4. **Ensure Docker is Running**
-     - Start **Docker Desktop**
+      ⚠️ **Important:** The `JWT_SECRET` value should **never be exposed** in a real production environment.  
+      This setup is acceptable **only for local development** or learning purposes.
+      In a production setup, use secure environment variable management or secret vaults.
+
+5. **Ensure Docker is Running**
+     - Start `Docker Desktop`
      
-5. **Build and run the containers**
-     - Execute the command in the backend folder:
+6. **Build and run the containers**
+     - Execute the command in the `backend` folder:
        ```bash
        docker compose up --build
        ```
 
-6. **Access the Application**
+7. **Access the Application**
      - Open your browser and visit: [http://localhost:4173](http://localhost:4173)
   
-7. **Stopping the application**
+8. **Stopping the application**
     - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
       ```bash
       docker-compose down
