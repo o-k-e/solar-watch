@@ -21,6 +21,14 @@ public class GeocodingService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Retrieves the geographical coordinates (latitude and longitude) for a given city name
+     * using a geocoding API.
+     *
+     * @param city the name of the city to search for
+     * @return an {@link Optional} containing the {@link GeocodingResponse} if coordinates were found,
+     *         or {@link Optional#empty()} if no results were returned by the API
+     */
     public Optional<GeocodingResponse> getCoordinates(String city) {
         String url = API_URL + "?q=" + city + "&appid=" + apiKey;
 

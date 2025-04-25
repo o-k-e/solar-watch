@@ -29,12 +29,24 @@ public class CityService {
         this.cityMapper = cityMapper;
     }
 
+    /**
+     * Retrieves all cities stored in the database.
+     *
+     * @return a list of {@link CityResponse} objects representing all saved cities
+     */
     public List<CityResponse> getAllCities() {
         List<City> cities = cityRepository.findAll();
         return cityMapper.mapToCityResponseList(cities);
 
     }
 
+    /**
+     * Retrieves a city by its unique identifier.
+     *
+     * @param id the ID of the city to retrieve
+     * @return an {@link Optional} containing the {@link CityResponse} if the city exists,
+     *         or {@link Optional#empty()} if no city with the given ID was found
+     */
     public Optional<CityResponse> getCityById(long id) {
         Optional<City> city = cityRepository.findById(id);
         if (city.isPresent()) {
@@ -46,6 +58,12 @@ public class CityService {
         }
     }
 
+    /**
+     * Creates and stores a new city in the database.
+     *
+     * @param city the {@link CityCreationRequest} containing the name, country, and coordinates of the city
+     * @return a {@link CityResponse} representing the newly created city
+     */
     public CityResponse addCity(CityCreationRequest city) {
         log.info("1. Creating city name: {}, country: {}", city.getName(), city.getCountry());
         City savedCity = cityRepository.save(cityMapper.mapToCity(city));
@@ -54,6 +72,13 @@ public class CityService {
         return cityResponse;
     }
 
+    /**
+     * Deletes a city from the database based on its ID.
+     *
+     * @param id the ID of the city to delete
+     * @return a {@link SuccessResponse} indicating whether the operation was successful
+     * @throws CityNotFoundException if no city with the given ID exists
+     */
     public SuccessResponse deleteCity(long id) {
 
         Optional<City> city = cityRepository.findById(id);
@@ -61,7 +86,13 @@ public class CityService {
         cityRepository.delete(cityEntity);
         return new SuccessResponse(true);
     }
-
+    /**
+     * Updates the information of an existing city.
+     *
+     * @param cityModificationRequest the {@link CityModificationRequest} containing updated city data
+     * @return a {@link SuccessResponse} indicating whether the update was successful
+     * @throws CityNotFoundException if no city with the given ID exists
+     */
     public SuccessResponse updateCity(CityModificationRequest cityModificationRequest) {
         Optional<City> cityEntity = cityRepository.findById(cityModificationRequest.getId());
         City city = cityEntity.orElseThrow(() -> new CityNotFoundException(Long.toString(cityModificationRequest.getId())));
