@@ -114,9 +114,14 @@ To get a local copy up and running, follow these steps:
 ## Usage
 Once the services are up and running, you can access the frontend to explore the application.
 
-On the website, you can:
-
-- **Log in** to your account for a personalized experience.
+On the website, you can either:
+- **Log in** with the default admin user credentials:
+  ```bash
+  Username: admin
+  Password: admin
+  ```
+or
+- **Register** a new user, then **Log in** with your own credentials.
 - **Search for sunrise and sunset times** by entering a city and a specific date.
 - **View solar information** displayed in a clear and easy-to-read format.
 - **Admin users** can view the list of cities stored in the database.
