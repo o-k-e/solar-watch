@@ -18,7 +18,7 @@
 
 SolarWatch is a full-stack web application that allows users to search for the sunrise and sunset times of any city on a specific date. It integrates external APIs ([OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api) and [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)) and presents the results in a clean and modern desktop layout.
 
-Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL backend, the app is fully containerized using Docker for smooth local setup and deployment.
+Built with a `React`, `Vite`, `Tailwind` frontend and a `Spring Boot`, `PostgreSQL` backend, the app is fully containerized using Docker for smooth local setup and deployment.
 
 ### Features
 
@@ -55,18 +55,20 @@ The project features role-based access control:
 
 ## Contact
 
-- Erika Oláhné Klár [![GitHub](https://img.shields.io/badge/GitHub-%2312100E.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/o-k-e)  [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/erika-olahne-klar/)
+- Erika Oláhné Klár: [![GitHub](https://img.shields.io/badge/GitHub-%2312100E.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/o-k-e)  [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/erika-olahne-klar/)
   
 ## Getting Started
-
 To get a local copy up and running, follow these steps:
 
 ### Prerequisites
-
-Make sure you have the following installed:
-### Docker Desktop  
-[https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)  
-Tip: After installation, **start Docker Desktop** to ensure `docker` commands work.
+  
+  This project uses **Docker** for containerized development.
+  
+  To install everything you need, just download **Docker Desktop**:
+  
+  - [Docker Desktop for Windows/macOS](https://www.docker.com/products/docker-desktop)
+    
+  Tip: After installation, **start Docker Desktop** to ensure `docker` commands work.
 
 ### Installation Steps
 
@@ -75,7 +77,7 @@ Tip: After installation, **start Docker Desktop** to ensure `docker` commands wo
 2. **Clone the repository** to your machine by executing the command `git clone https://github.com/o-k-e/solar-watch.git` in your **terminal**.
    
 3. **Configure Environment Variables**
-      Before starting the app, **create** a `.env` file **inside the backend folder** containing the following environment variables:
+      - Before starting the app, **create** a `.env` file **inside the backend folder** containing the following environment variables:
       
       ```env
       DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
@@ -92,23 +94,24 @@ Tip: After installation, **start Docker Desktop** to ensure `docker` commands wo
       JWT_SECRET example: `JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN`
       JWT_EXPIRATION example (48 hour): `JWT_EXPIRATION=8640000`
       ```
-      
-5. **Ensure Docker is Running**
-     Start **Docker Desktop**
-     
-6. **Build and run the containers**
-     Execute the command in the backend folder:
-     ```bash
-     docker compose up --build
-     ```
 
-7. **Access the Application**
-     Open your browser and visit: [http://localhost:4173](http://localhost:4173)
+4. **Ensure Docker is Running**
+     - Start **Docker Desktop**
+     
+5. **Build and run the containers**
+     - Execute the command in the backend folder:
+       ```bash
+       docker compose up --build
+       ```
+
+6. **Access the Application**
+     - Open your browser and visit: [http://localhost:4173](http://localhost:4173)
   
-8. **Stopping the application**
-    To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
-     ```bash
-     docker-compose down
+7. **Stopping the application**
+    - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
+      ```bash
+      docker-compose down
+      ```
 
 ## Usage
 Once the services are up and running, you can access the frontend to explore the application.
