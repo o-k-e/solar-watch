@@ -6,11 +6,3 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record SunriseSunsetResponse(SunriseSunsetResults results) {
 
 }
-
-//{
-//    "results": {
-//        "sunrise": "6:30:00 AM",
-//        "sunset": "5:45:00 PM"
-//    },
-//    "status": "OK"
-//}

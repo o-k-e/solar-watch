@@ -26,13 +26,6 @@ public class SunriseSunsetService {
         logger.info("Getting sunrise sunset for lat: {}, lon: {}, date: {}", lat, lon, date);
 
         String url = API_URL + "?lat=" + lat + "&lng=" + lon + "&date=" + date;
-//        String url = String.format("https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=%s", lat, lon, date);
-
-//        String url = UriComponentsBuilder.fromHttpUrl(API_URL)
-//                .queryParam("lat", lat)
-//                .queryParam("lng", lon)
-//                .queryParam("date", date)
-//                .toUriString();
 
         SunriseSunsetResponse response = restTemplate.getForObject(url, SunriseSunsetResponse.class);
 

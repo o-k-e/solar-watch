@@ -5,7 +5,6 @@ import com.codecool.solarwatch.model.dto.request.CityCreationRequest;
 import com.codecool.solarwatch.model.dto.request.CityModificationRequest;
 import com.codecool.solarwatch.model.dto.response.CityResponse;
 import com.codecool.solarwatch.model.dto.response.SuccessResponse;
-import com.codecool.solarwatch.model.entity.City;
 import com.codecool.solarwatch.service.CityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

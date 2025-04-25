@@ -24,7 +24,6 @@ public class CityMapper {
 
     public List<CityResponse> mapToCityResponseList(List<City> cities) {
         return cities.stream()
-//                .map(city -> mapToCityResponse(city))
                 .map(this::mapToCityResponse)
                 .toList();
     }

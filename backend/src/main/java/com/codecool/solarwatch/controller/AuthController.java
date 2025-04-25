@@ -29,12 +29,9 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-//    @PreAuthorize("hasRole('USER')")
     public MemberResponse me() {
         return authenticationService.me();
 
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        return "Hello " + user.getUsername();
     }
 
 
