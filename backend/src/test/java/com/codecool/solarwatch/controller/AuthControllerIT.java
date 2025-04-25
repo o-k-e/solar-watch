@@ -1,16 +1,12 @@
 package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.model.dto.request.MemberRequest;
-import com.codecool.solarwatch.model.dto.response.MemberResponse;
 import com.codecool.solarwatch.repository.MemberRepository;
-import com.codecool.solarwatch.repository.RoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,11 +21,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest //elinduljon a spring, de csak teszteles miatt, pom file-ban kell a dependency hozza
+@SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = "classpath:application-test.properties")
-@ExtendWith(SpringExtension.class) //It enables Spring’s dependency injection and context management in JUnit 5 tests.
-public class AuthControllerITest {    //Without @ExtendWith(), @Autowired won’t work inside test classes.
+@ExtendWith(SpringExtension.class)
+public class AuthControllerIT {
 
     @Autowired
     private MockMvc mockMvc;

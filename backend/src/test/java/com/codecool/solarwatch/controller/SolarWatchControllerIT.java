@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 @ExtendWith(SpringExtension.class)
 @Transactional
-public class SolarWatchControllerITest {
+public class SolarWatchControllerIT {
 
     @Autowired
     private MockMvc mockMvc;

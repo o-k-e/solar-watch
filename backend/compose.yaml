@@ -1,31 +1,51 @@
 services:
-  app:
-    image: 'solar-watch:latest'
+  db:
+    image: postgres:13.1-alpine
+    container_name: solarwatch_db
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: solarwatch
+    ports:
+      - "5433:5432"
+    volumes:
+      - solarwatch_db_data:/var/lib/postgresql/data
+    networks:
+      - solarwatch_net
+
+  backend:
     build:
       context: .
-    ports:
-      - "8080:8080"
-    container_name: app
+    container_name: solarwatch_backend
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
-      - SPRING_DATASOURCE_USERNAME=compose-postgres
-      - SPRING_DATASOURCE_PASSWORD=compose-postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+      - SPRING_JPA_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
 
-  db:
-    image: 'postgres:13.1-alpine'
-    container_name: db
-    environment:
-      - POSTGRES_USER=compose-postgres
-      - POSTGRES_PASSWORD=compose-postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - solarwatch_net
 
   frontend:
     build:
       context: ../frontend
+    container_name: solarwatch_frontend
+    depends_on:
+      - backend
     ports:
       - "4173:4173"
-    container_name: frontend
-    depends_on:
-      - app
+    networks:
+      - solarwatch_net
+
+volumes:
+  solarwatch_db_data:
+
+networks:
+  solarwatch_net:
+    driver: bridge
