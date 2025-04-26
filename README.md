@@ -90,7 +90,7 @@ To get a local copy up and running, follow these steps:
       Replace `your_username`, `your_password` with your actual credentials.
 
       ⚠️ **Important:** The `JWT_SECRET` value should **never be exposed** in a real production environment.  
-      This setup is acceptable **only for local development** or learning purposes.
+      This setup is acceptable **only for local development** or **learning purposes**.
       In a production setup, use secure environment variable management or secret vaults.
 
 5. **Ensure Docker is Running**
