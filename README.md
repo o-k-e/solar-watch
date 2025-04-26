@@ -77,21 +77,26 @@ To get a local copy up and running, follow these steps:
 2. **Clone the repository** to your machine by executing the command `git clone https://github.com/o-k-e/solar-watch.git` in your **terminal**.
    
 3. **Configure Environment Variables**
-      - Before starting the app, **create** a `.env` file **inside the backend folder** containing the following environment variables:
-      
-      ```env
-      DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
-      DATABASE_USERNAME=your_username
-      DATABASE_PASSWORD=your_password
-      JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN
-      JWT_EXPIRATION=8640000
-      ```
-      
-      Replace `your_username`, `your_password` with your actual credentials.
 
-      ⚠️ **Important:** The `JWT_SECRET` value should **never be exposed** in a real production environment.  
-      This setup is acceptable **only for local development** or **learning purposes**.
-      In a production setup, use secure environment variable management or secret vaults.
+   - To set up your environment variables, copy and rename the .env.example file to .env in the root directory. Run following terminal command:
+      ```bash
+      copy .env.example .env
+      ```
+    - Once copied, you can open the .env file and replace `your_username`, `your_password` with your actual credentials.
+      . For example:
+  
+        ```env
+        DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
+        DATABASE_USERNAME=postgres
+        DATABASE_PASSWORD=postgres
+        JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN
+        JWT_EXPIRATION=8640000
+        ```
+        
+      ⚠️ **Important:**  
+      The `.env` file contains sensitive information (such as database credentials and JWT secrets) and should **never be exposed** in a real production environment.  
+      This setup is acceptable **only for local development** or **learning purposes**.  
+      In a production setup, use secure environment variable management tools or secret vaults.
 
 5. **Ensure Docker is Running**
      - Start `Docker Desktop`
