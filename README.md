@@ -95,22 +95,21 @@ To get a local copy up and running, follow these steps:
         
       ⚠️ **Important:**  
       The `.env` file contains sensitive information (such as database credentials and JWT secrets) and should **never be exposed** in a real production environment.  
-      This setup is acceptable **only for local development** or **learning purposes**.  
-      In a production setup, use secure environment variable management tools or secret vaults.
+      This setup is acceptable **only for local development** or **learning purposes**.  In a production setup, use secure environment variable management tools or secret vaults.
 
-5. **Ensure Docker is Running**
+4. **Ensure Docker is Running**
      - Start `Docker Desktop`
      
-6. **Build and run the containers**
+5. **Build and run the containers**
      - Execute the command in the `backend` folder:
        ```bash
        docker compose up --build
        ```
 
-7. **Access the Application**
+6. **Access the Application**
      - Open your browser and visit: [http://localhost:4173](http://localhost:4173)
   
-8. **Stopping the application**
+7. **Stopping the application**
     - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
       ```bash
       docker-compose down
