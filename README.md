@@ -62,13 +62,10 @@ To get a local copy up and running, follow these steps:
 
 ### Prerequisites
   
-  This project uses **Docker** for containerized development.
-  
-  To install everything you need, just download `Docker Desktop`:
-  
-  - [Docker Desktop for Windows/macOS](https://www.docker.com/products/docker-desktop)
-    
-  Tip: After installation, **start Docker Desktop** to ensure `docker` commands work.
+  This project uses **Docker** for containerized development. To install everything you need, just download `Docker Desktop`:
+
+  - Docker Desktop
+    ➡️ https://www.docker.com/products/docker-desktop
 
 ### Installation Steps
 
