@@ -74,6 +74,7 @@ To get a local copy up and running, follow these steps:
 2. **Clone the repository** to your machine by executing the command in your **terminal**:
     ```bash
     git clone https://github.com/o-k-e/solar-watch.git
+    cd backend
     ```
    
 3. **Configure Environment Variables**
