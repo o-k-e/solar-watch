@@ -71,11 +71,14 @@ To get a local copy up and running, follow these steps:
 
 1. Open a **terminal** and navigate to the directory where you would like to save the repository.
    
-2. **Clone the repository** to your machine by executing the command `git clone https://github.com/o-k-e/solar-watch.git` in your **terminal**.
+2. **Clone the repository** to your machine by executing the command in your **terminal**:
+    ```bash
+    git clone https://github.com/o-k-e/solar-watch.git
+    ```
    
 3. **Configure Environment Variables**
 
-   - To set up your environment variables, copy and rename the .env.example file to .env in the root directory. Run following terminal command:
+   - To set up your environment variables, copy and rename the .env.example file to .env in the root directory by running the following terminal command:
       ```bash
       copy .env.example .env
       ```
@@ -91,7 +94,7 @@ To get a local copy up and running, follow these steps:
         ```
         
       ⚠️ **Important:**  
-      The `.env` file contains sensitive information (such as database credentials and JWT secrets) and should **never be exposed** in a real production environment.  
+      The `.env` file contains sensitive information (such as database credentials and JWT secrets) and should **never be exposed** in a real production environment. 
       This setup is acceptable **only for local development** or **learning purposes**.  In a production setup, use secure environment variable management tools or secret vaults.
 
 4. **Ensure Docker is Running**
