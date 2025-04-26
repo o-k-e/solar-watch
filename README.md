@@ -113,7 +113,7 @@ To get a local copy up and running, follow these steps:
 7. **Stopping the application**
     - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
       ```bash
-      docker-compose down
+      docker compose down -v
       ```
 
 ## Usage
