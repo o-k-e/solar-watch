@@ -75,7 +75,7 @@ Make sure you have the following installed:
   
 
 
-- Frontend runs at: [http://localhost:5173](http://localhost:5173)
+- Frontend runs at: [http://localhost](http://localhost)
 - Backend runs at: [http://localhost:8080](http://localhost:8080)
 
 ## Usage
