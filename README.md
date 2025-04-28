@@ -117,7 +117,7 @@ To get a local copy up and running, follow these steps:
        ```
 
 6. **Access the Application**
-     - Open your browser and visit: [http://localhost:4173](http://localhost:4173)
+     - Open your browser and visit: [http://localhost](http://localhost)
   
 7. **Stopping the application**
     - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
