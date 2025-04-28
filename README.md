@@ -80,7 +80,7 @@ To get a local copy up and running, follow these steps:
 
 1. Open a **terminal** and navigate to the directory where you would like to save the repository.
    
-2. **Clone the repository** to your machine by executing the command in your **terminal**:
+2. **Clone the repository** to your machine by executing these commands in your **terminal**:
     ```bash
     git clone https://github.com/o-k-e/solar-watch.git
     cd backend
@@ -93,7 +93,7 @@ To get a local copy up and running, follow these steps:
       copy .env.example .env
       ```
     - Once copied, you can open the .env file and replace `your_username`, `your_password` with your actual credentials.
-      . For example:
+      For example:
   
         ```env
         DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
