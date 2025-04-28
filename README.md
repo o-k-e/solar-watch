@@ -1,4 +1,11 @@
-# SolarWatch
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a>
+<img width="235" alt="SolarWatch-logo" src="https://github.com/user-attachments/assets/e953380d-da09-4a59-bcde-1daf3e937850" />
+  </a>
+<h1 align="center">SolarWatch</h1>
+</div>
 
 <details>
 <summary><h2><strong>Table of Contents</strong><h2></summary>
