@@ -1,7 +1,12 @@
-FROM maven:3.9.9-amazoncorretto-21-al2023
+FROM maven:3.9.9-amazoncorretto-21-al2023 AS builder
 WORKDIR /tmp
 COPY . .
 RUN mvn clean package
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "target/solar-watch-0.0.1-SNAPSHOT.jar"]
 
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+COPY --from=builder /tmp/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
