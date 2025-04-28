@@ -1,11 +1,18 @@
-# SolarWatch
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a>
+<img width="235" alt="SolarWatch-logo" src="https://github.com/user-attachments/assets/e953380d-da09-4a59-bcde-1daf3e937850" />
+  </a>
+<h1 align="center">SolarWatch</h1>
+</div>
 
 <details>
 <summary><h2><strong>Table of Contents</strong><h2></summary>
   
 - [About the Project](#about-the-project)
 - [Built With](#built-with)
-- [Contributors](#contributors)
+- [Contact](#contact)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation Steps](#installation-steps)
@@ -18,7 +25,7 @@
 
 SolarWatch is a full-stack web application that allows users to search for the sunrise and sunset times of any city on a specific date. It integrates external APIs ([OpenWeather Geocoding API](https://openweathermap.org/api/geocoding-api) and [Sunrise and Sunset Times API](https://sunrise-sunset.org/api)) and presents the results in a clean and modern desktop layout.
 
-Built with a React / Vite + Tailwind frontend and a Spring Boot + PostgreSQL backend, the app is fully containerized using Docker for smooth local setup and deployment.
+Built with a `React`, `Vite`, `Tailwind` frontend and a `Spring Boot`, `PostgreSQL` backend, the app is fully containerized using Docker for smooth local setup and deployment.
 
 ### Features
 
@@ -53,37 +60,82 @@ The project features role-based access control:
 - **Containerization:**  
   [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)  
 
-## Getting Started
+## Contact
 
+- **Erika Oláhné Klár:**  
+  [![GitHub](https://img.shields.io/badge/GitHub-%2312100E.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/o-k-e)  [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/erika-olahne-klar/)
+
+
+## Getting Started
 To get a local copy up and running, follow these steps:
 
 ### Prerequisites
+  
+  This project uses **Docker** for containerized development. To install everything you need, just download `Docker Desktop`:
 
-Make sure you have the following installed:
-
-- **Java 23**
-- **Node.js 18+**
-- **PostgreSQL 14+**
-- **Maven**
-- **Docker** (*optional*)
+  - Docker Desktop
+    ➡️ https://www.docker.com/products/docker-desktop
 
 ### Installation Steps
 
 1. Open a **terminal** and navigate to the directory where you would like to save the repository.
    
-2. **Clone the repository** to your machine by executing the command git clone https://github.com/o-k-e/solar-watch.git in your **terminal**, then start the application locally.
+2. **Clone the repository** to your machine by executing these commands in your **terminal**:
+    ```bash
+    git clone https://github.com/o-k-e/solar-watch.git
+    cd backend
+    ```
+   
+3. **Configure Environment Variables**
+
+   - To set up your environment variables, copy and rename the .env.example file to .env in the root directory by running the following terminal command:
+      ```bash
+      copy .env.example .env
+      ```
+    - Once copied, you can open the .env file and replace `your_username`, `your_password` with your actual credentials.
+      For example:
   
+        ```env
+        DATABASE_URL=jdbc:postgresql://db:5432/solarwatch
+        DATABASE_USERNAME=postgres
+        DATABASE_PASSWORD=postgres
+        JWT_SECRET=uH38!v4zP#cE1sM@9rT$wX2qL*kbZ7oN
+        JWT_EXPIRATION=8640000
+        ```
+        
+      ⚠️ **Important:**  
+      The `.env` file contains sensitive information (such as database credentials and JWT secrets) and should **never be exposed** in a real production environment. 
+      This setup is acceptable **only for local development** or **learning purposes**.  In a production setup, use secure environment variable management tools or secret vaults.
 
+4. **Ensure Docker is Running**
+     - Start `Docker Desktop`
+     
+5. **Build and run the containers**
+     - Execute the command in the `backend` folder:
+       ```bash
+       docker compose up --build
+       ```
 
-- Frontend runs at: [http://localhost](http://localhost)
-- Backend runs at: [http://localhost:8080](http://localhost:8080)
+6. **Access the Application**
+     - Open your browser and visit: [http://localhost:4173](http://localhost:4173)
+  
+7. **Stopping the application**
+    - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
+      ```bash
+      docker compose down -v
+      ```
 
 ## Usage
 Once the services are up and running, you can access the frontend to explore the application.
 
-On the website, you can:
-
-- **Log in** to your account for a personalized experience.
+On the website, you can either:
+- **Log in** with the default admin user credentials:
+  ```bash
+  Username: admin
+  Password: admin
+  ```
+or
+- **Register** a new user, then **Log in** with your own credentials.
 - **Search for sunrise and sunset times** by entering a city and a specific date.
 - **View solar information** displayed in a clear and easy-to-read format.
 - **Admin users** can view the list of cities stored in the database.
