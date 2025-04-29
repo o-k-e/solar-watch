@@ -13,13 +13,13 @@ import java.util.List;
 public class CityMapper {
 
     public CityResponse mapToCityResponse(City city) {
-        CityResponse cityResponse = new CityResponse();
-        cityResponse.setId(city.getId());
-        cityResponse.setName(city.getName());
-        cityResponse.setLongitude(city.getLongitude());
-        cityResponse.setLatitude(city.getLatitude());
-        cityResponse.setCountry(city.getCountry());
-        return cityResponse;
+        return new CityResponse(
+                city.getId(),
+                city.getName(),
+                city.getLongitude(),
+                city.getLatitude(),
+                city.getCountry()
+        );
     }
 
     public List<CityResponse> mapToCityResponseList(List<City> cities) {
@@ -30,20 +30,20 @@ public class CityMapper {
 
     public City mapToCity(CityResponse cityResponse) {
         City city = new City();
-        city.setId(cityResponse.getId());
-        city.setName(cityResponse.getName());
-        city.setLongitude(cityResponse.getLongitude());
-        city.setLatitude(cityResponse.getLatitude());
-        city.setCountry(cityResponse.getCountry());
+        city.setId(cityResponse.id());
+        city.setName(cityResponse.name());
+        city.setLongitude(cityResponse.longitude());
+        city.setLatitude(cityResponse.latitude());
+        city.setCountry(cityResponse.country());
         return city;
     }
 
     public City mapToCity(CityCreationRequest cityCreationRequest) {
         City city = new City();
-        city.setName(cityCreationRequest.getName());
-        city.setLongitude(cityCreationRequest.getLongitude());
-        city.setLatitude(cityCreationRequest.getLatitude());
-        city.setCountry(cityCreationRequest.getCountry());
+        city.setName(cityCreationRequest.name());
+        city.setLongitude(cityCreationRequest.longitude());
+        city.setLatitude(cityCreationRequest.latitude());
+        city.setCountry(cityCreationRequest.country());
         return city;
     }
 }

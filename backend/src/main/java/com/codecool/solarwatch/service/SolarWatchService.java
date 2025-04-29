@@ -48,7 +48,7 @@ public class SolarWatchService {
      * @param date     The requested date.
      * @return Optional SolarWatchResponse containing sunrise/sunset times.
      */
-    public Optional<SolarWatchResponse> getSunriseSunset(String cityName, LocalDate date) {
+    public SolarWatchResponse getSunriseSunset(String cityName, LocalDate date) {
         logger.info("Getting sunrise sunset for city: {}, date: {}", cityName, date);
 
         // Fetch city from DB or API
@@ -59,12 +59,12 @@ public class SolarWatchService {
         Optional<SunriseSunset> existingSunriseSunset = getExistingSunriseSunset(city, date);
         if (existingSunriseSunset.isPresent()) {
             logger.info("Returning cached sunrise/sunset data for city {}, date {}", cityName, date);
-            return Optional.of(mapToSolarWatchResponse(city, date, existingSunriseSunset.get()));
+            return mapToSolarWatchResponse(city, date, existingSunriseSunset.get());
         }
 
         // Fetch from API if not found
         SunriseSunset newSunriseSunset = fetchAndSaveSunriseSunset(city, date);
-        return Optional.of(mapToSolarWatchResponse(city, date, newSunriseSunset));
+        return mapToSolarWatchResponse(city, date, newSunriseSunset);
     }
 
     /**

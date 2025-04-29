@@ -63,7 +63,7 @@ public class CityService {
      * @return a {@link CityResponse} representing the newly created city
      */
     public CityResponse addCity(CityCreationRequest city) {
-        log.info("1. Creating city name: {}, country: {}", city.getName(), city.getCountry());
+        log.info("1. Creating city name: {}, country: {}", city.name(), city.country());
         City savedCity = cityRepository.save(cityMapper.mapToCity(city));
         CityResponse cityResponse = cityMapper.mapToCityResponse(savedCity);
         log.info("2. New city name: {} saved.", savedCity.getName());
@@ -92,12 +92,12 @@ public class CityService {
      * @throws CityNotFoundException if no city with the given ID exists
      */
     public SuccessResponse updateCity(CityModificationRequest cityModificationRequest) {
-        Optional<City> cityEntity = cityRepository.findById(cityModificationRequest.getId());
-        City city = cityEntity.orElseThrow(() -> new CityNotFoundException(Long.toString(cityModificationRequest.getId())));
-        city.setName(cityModificationRequest.getName());
-        city.setLongitude(cityModificationRequest.getLongitude());
-        city.setLatitude(cityModificationRequest.getLatitude());
-        city.setCountry(cityModificationRequest.getCountry());
+        Optional<City> cityEntity = cityRepository.findById(cityModificationRequest.id());
+        City city = cityEntity.orElseThrow(() -> new CityNotFoundException(Long.toString(cityModificationRequest.id())));
+        city.setName(cityModificationRequest.name());
+        city.setLongitude(cityModificationRequest.longitude());
+        city.setLatitude(cityModificationRequest.latitude());
+        city.setCountry(cityModificationRequest.country());
         cityRepository.save(city);
         return new SuccessResponse(true);
     }

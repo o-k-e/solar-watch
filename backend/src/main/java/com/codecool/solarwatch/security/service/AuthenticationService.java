@@ -2,17 +2,14 @@ package com.codecool.solarwatch.security.service;
 
 import com.codecool.solarwatch.controller.AuthController;
 import com.codecool.solarwatch.model.dto.request.MemberRequest;
-import com.codecool.solarwatch.model.dto.response.ErrorResponse;
-import com.codecool.solarwatch.model.dto.response.JwtResponse;
-import com.codecool.solarwatch.model.dto.response.MemberResponse;
-import com.codecool.solarwatch.model.dto.response.SuccessResponse;
+import com.codecool.solarwatch.model.dto.response.*;
 import com.codecool.solarwatch.model.entity.Member;
 import com.codecool.solarwatch.model.entity.Role;
 import com.codecool.solarwatch.repository.MemberRepository;
 import com.codecool.solarwatch.repository.RoleRepository;
 import com.codecool.solarwatch.security.jwt.JwtUtils;
+import com.codecool.solarwatch.service.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,7 +34,7 @@ public class AuthenticationService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
-
+    private MemberMapper memberMapper;
 
     @Autowired
     public AuthenticationService(MemberRepository memberRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
@@ -46,59 +43,64 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.memberMapper = new MemberMapper();
     }
 
-    public ResponseEntity<?> register(MemberRequest registerRequest)  {
-
-        if (memberRepository.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Username already exists"));
+    public MemberPublicResponse register(MemberRequest registerRequest) {
+        if (memberRepository.existsByUsername(registerRequest.username())) {
+            throw new IllegalArgumentException("Username already exists");
         }
 
         try {
             Member member = new Member();
-            member.setUsername(registerRequest.getUsername());
-            member.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            member.setUsername(registerRequest.username());
+            member.setPassword(passwordEncoder.encode(registerRequest.password()));
 
             Set<Role> roles = new HashSet<>();
-            Role role = roleRepository.findByName("USER").orElseThrow(
-                    () -> new RuntimeException("Default role ROLE_USER not found in database"));
+            Role role = roleRepository.findByName("USER")
+                    .orElseThrow(() -> new RuntimeException("Default role ROLE_USER not found in database"));
             roles.add(role);
 
             member.setRoles(roles);
 
-            memberRepository.save(member);
+            Member savedMember = memberRepository.save(member);
 
-            return ResponseEntity.ok(new SuccessResponse(true));
+            return memberMapper.mapToMemberPublicResponse(savedMember);
+
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(500).body(new ErrorResponse("Error registering user"));
+            logger.error("Error registering user", e);
+            throw new RuntimeException("Error registering user");
         }
     }
 
-    public ResponseEntity<JwtResponse> login(MemberRequest loginRequest) {
+    public JwtResponse login(MemberRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(authentication);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+            User userDetails = (User) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            Set<String> roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toSet());
 
-        User userDetails = (User) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        Set<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-
-        return ResponseEntity.ok(new JwtResponse(jwt, username, roles));
-
+            return new JwtResponse(jwt, username, roles);
+        } catch (Exception e) {
+            throw new RuntimeException("Authentication failed", e);
+        }
     }
 
     public MemberResponse me() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MemberResponse memberResponse = new MemberResponse();
-        memberResponse.setUsername(user.getUsername());
-        memberResponse.setPassword(user.getPassword());
-        memberResponse.setRoles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()));
-        return memberResponse;
+        return new MemberResponse(
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toSet())
+        );
     }
 }
