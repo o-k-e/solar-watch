@@ -1,7 +1,5 @@
 package com.codecool.solarwatch.controller;
 
-
-import com.codecool.solarwatch.exception.CityNotFoundException;
 import com.codecool.solarwatch.model.dto.SolarWatchResponse;
 import com.codecool.solarwatch.service.SolarWatchService;
 import org.slf4j.Logger;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @RestController
 public class SolarWatchController {
@@ -33,7 +30,6 @@ public class SolarWatchController {
             date = LocalDate.now();
         }
         logger.info("Received request for city: {}, date: {}", city, date);
-//        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset(city, date);
         return solarWatchService.getSunriseSunset(city, date);
     }
 }
