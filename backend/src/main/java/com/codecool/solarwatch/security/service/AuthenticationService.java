@@ -47,14 +47,14 @@ public class AuthenticationService {
     }
 
     public MemberPublicResponse register(MemberRequest registerRequest) {
-        if (memberRepository.existsByUsername(registerRequest.getUsername())) {
+        if (memberRepository.existsByUsername(registerRequest.username())) {
             throw new IllegalArgumentException("Username already exists");
         }
 
         try {
             Member member = new Member();
-            member.setUsername(registerRequest.getUsername());
-            member.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            member.setUsername(registerRequest.username());
+            member.setPassword(passwordEncoder.encode(registerRequest.password()));
 
             Set<Role> roles = new HashSet<>();
             Role role = roleRepository.findByName("USER")
@@ -76,7 +76,7 @@ public class AuthenticationService {
     public JwtResponse login(MemberRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                    new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
@@ -95,10 +95,12 @@ public class AuthenticationService {
 
     public MemberResponse me() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MemberResponse memberResponse = new MemberResponse();
-        memberResponse.setUsername(user.getUsername());
-        memberResponse.setPassword(user.getPassword());
-        memberResponse.setRoles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()));
-        return memberResponse;
+        return new MemberResponse(
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toSet())
+        );
     }
 }

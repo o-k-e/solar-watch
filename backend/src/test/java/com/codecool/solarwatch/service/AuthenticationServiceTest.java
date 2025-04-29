@@ -74,7 +74,7 @@ class AuthenticationServiceTest {
 
         MemberPublicResponse response = authenticationService.register(request);
 
-        assertEquals("testuser", response.getUsername());
+        assertEquals("testuser", response.username());
         verify(memberRepository).save(any(Member.class));
     }
 
@@ -131,7 +131,7 @@ class AuthenticationServiceTest {
 
         MemberResponse response = authenticationService.me();
 
-        assertEquals("currentuser", response.getUsername());
-        assertEquals("encodedPassword", response.getPassword());
+        assertEquals("currentuser", response.username());
+        assertEquals("encodedPassword", response.password());
     }
 }
