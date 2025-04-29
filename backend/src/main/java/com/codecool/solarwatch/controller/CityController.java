@@ -27,12 +27,8 @@ public class CityController {
     }
 
     @GetMapping("/find-by-id/{id}")
-    public ResponseEntity<?> getCityById(@PathVariable long id) {
-        try {
-            return ResponseEntity.status(200).body(cityService.getCityById(id));
-        } catch (CityNotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+    public CityResponse getCityById(@PathVariable long id) {
+        return cityService.getCityById(id);
     }
 
     @PostMapping("/create")

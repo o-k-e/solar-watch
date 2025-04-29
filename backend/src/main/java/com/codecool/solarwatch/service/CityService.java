@@ -47,15 +47,13 @@ public class CityService {
      * @return an {@link Optional} containing the {@link CityResponse} if the city exists,
      *         or {@link Optional#empty()} if no city with the given ID was found
      */
-    public Optional<CityResponse> getCityById(long id) {
-        Optional<City> city = cityRepository.findById(id);
-        if (city.isPresent()) {
-            CityResponse cityResponse = cityMapper.mapToCityResponse(city.get());
-            return Optional.of(cityResponse);
-        } else {
-            log.warn("City with id {} not found", id);
-            return Optional.empty();
-        }
+    public CityResponse getCityById(long id) {
+        City city = cityRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("City with id {} not found", id);
+                    return new CityNotFoundException(Long.toString(id));
+                });
+        return cityMapper.mapToCityResponse(city);
     }
 
     /**
