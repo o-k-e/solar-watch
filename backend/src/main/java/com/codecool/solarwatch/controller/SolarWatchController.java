@@ -32,11 +32,8 @@ public class SolarWatchController {
         if (date == null) {
             date = LocalDate.now();
         }
-
         logger.info("Received request for city: {}, date: {}", city, date);
-
-        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset(city, date);
-
-        return response.orElseThrow(() -> new CityNotFoundException(city));
+//        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset(city, date);
+        return solarWatchService.getSunriseSunset(city, date);
     }
 }
