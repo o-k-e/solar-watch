@@ -75,15 +75,9 @@ public class AuthenticationServiceTest {
 
     @BeforeEach
     void setUp() {
+        testMember = mock(Member.class);
+        userRole = mock(Role.class);
         testRequest = new MemberRequest("testuser", "password123");
-
-        userRole = new Role();
-        userRole.setName("USER");
-
-        testMember = new Member();
-        testMember.setUsername("testuser");
-        testMember.setPassword("encodedPassword");
-        testMember.setRoles(Set.of(userRole));
     }
 
     @DisplayName("Unit test - register() Successful registration")
@@ -121,14 +115,16 @@ public class AuthenticationServiceTest {
     @Test
     void givenValidCredentials_whenLogin_thenReturnJwtToken() {
         // GIVEN
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(userDetails);
-        when(userDetails.getUsername()).thenReturn("testuser");
-        when(userDetails.getAuthorities()).thenReturn(Set.of(() -> "ROLE_USER"));
-        when(jwtUtils.generateJwtToken(authentication)).thenReturn("mockedJwtToken");
-
+        Authentication mockAuthentication = mock(Authentication.class);
+        User mockUser = mock(User.class);
         // WHEN
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(mockAuthentication);
+        when(mockAuthentication.getPrincipal()).thenReturn(mockUser);
+        when(mockUser.getUsername()).thenReturn("testuser");
+        when(mockUser.getAuthorities()).thenReturn(Set.of(new SimpleGrantedAuthority("ROLE_USER")));
+        when(jwtUtils.generateJwtToken(mockAuthentication)).thenReturn("mockedJwtToken");
+
         ResponseEntity<JwtResponse> response = authenticationService.login(testRequest);
 
         // THEN
@@ -155,14 +151,19 @@ public class AuthenticationServiceTest {
     @Test
     void givenAuthenticatedUser_whenMe_thenReturnMemberResponse() {
         //User data mocking
-        Set<GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority("ROLE_USER"));
-        User mockUser = new User("testuser", "encodedPassword", authorities);
+        User mockUser = mock(User.class);
+        when(mockUser.getUsername()).thenReturn("testuser");
+        when(mockUser.getPassword()).thenReturn("encodedPassword");
+        when(mockUser.getAuthorities()).thenReturn(Set.of(new SimpleGrantedAuthority("ROLE_USER")));
+
 
         // SecurityContext mocking
         SecurityContext securityContext = mock(SecurityContext.class);
+        Authentication mockAuth = mock(Authentication.class);
+
+        when(securityContext.getAuthentication()).thenReturn(mockAuth);
+        when(mockAuth.getPrincipal()).thenReturn(mockUser);
         SecurityContextHolder.setContext(securityContext);
-        when(securityContext.getAuthentication()).thenReturn(mock(Authentication.class));
-        when(securityContext.getAuthentication().getPrincipal()).thenReturn(mockUser);
 
         //WHEN
         MemberResponse response = authenticationService.me();

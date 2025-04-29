@@ -50,14 +50,14 @@ public class AuthenticationService {
 
     public ResponseEntity<?> register(MemberRequest registerRequest)  {
 
-        if (memberRepository.existsByUsername(registerRequest.getUsername())) {
+        if (memberRepository.existsByUsername(registerRequest.username())) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Username already exists"));
         }
 
         try {
             Member member = new Member();
-            member.setUsername(registerRequest.getUsername());
-            member.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            member.setUsername(registerRequest.username());
+            member.setPassword(passwordEncoder.encode(registerRequest.password()));
 
             Set<Role> roles = new HashSet<>();
             Role role = roleRepository.findByName("USER").orElseThrow(
@@ -78,7 +78,7 @@ public class AuthenticationService {
     public ResponseEntity<JwtResponse> login(MemberRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);

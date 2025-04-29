@@ -49,13 +49,11 @@ class SolarWatchServiceTest {
 
     private City testCity;
     private LocalDate testDate;
-    private SunriseSunset testSunriseSunset;
 
     @BeforeEach
     void setUp() {
         testCity = new City("London", -0.1276, 51.5074, "GB");
         testDate = LocalDate.of(2025, 3, 18);
-        testSunriseSunset = new SunriseSunset(testDate, "06:30 AM", "06:45 PM");
     }
 
     @DisplayName("JUnit test for getSunriseSunset() when city and data exist")

@@ -40,10 +40,10 @@ public class CityMapper {
 
     public City mapToCity(CityCreationRequest cityCreationRequest) {
         City city = new City();
-        city.setName(cityCreationRequest.getName());
-        city.setLongitude(cityCreationRequest.getLongitude());
-        city.setLatitude(cityCreationRequest.getLatitude());
-        city.setCountry(cityCreationRequest.getCountry());
+        city.setName(cityCreationRequest.name());
+        city.setLongitude(cityCreationRequest.longitude());
+        city.setLatitude(cityCreationRequest.latitude());
+        city.setCountry(cityCreationRequest.country());
         return city;
     }
 }
