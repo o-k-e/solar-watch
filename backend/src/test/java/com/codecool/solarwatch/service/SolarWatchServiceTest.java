@@ -67,13 +67,13 @@ class SolarWatchServiceTest {
                 .willReturn(Optional.of(new SunriseSunsetResponse(new SunriseSunsetResults("06:30 AM", "06:45 PM"))));
 
         // WHEN
-        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset("London", testDate);
+        SolarWatchResponse response = solarWatchService.getSunriseSunset("London", testDate);
 
         // THEN
-        assertThat(response).isPresent();
-        assertThat(response.get().city()).isEqualTo("London");
-        assertThat(response.get().sunrise()).isEqualTo("06:30 AM");
-        assertThat(response.get().sunset()).isEqualTo("06:45 PM");
+        assertThat(response).isNotNull();
+        assertThat(response.city()).isEqualTo("London");
+        assertThat(response.sunrise()).isEqualTo("06:30 AM");
+        assertThat(response.sunset()).isEqualTo("06:45 PM");
     }
 
     @DisplayName("JUnit test for getSunriseSunset() when city exists but no data")
@@ -85,11 +85,11 @@ class SolarWatchServiceTest {
                 .willReturn(Optional.of(new SunriseSunsetResponse(new SunriseSunsetResults("06:30 AM", "06:45 PM"))));
 
         // WHEN
-        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset("London", testDate);
+        SolarWatchResponse response = solarWatchService.getSunriseSunset("London", testDate);
 
         // THEN
-        assertThat(response).isPresent();
-        assertThat(response.get().city()).isEqualTo("London");
+        assertThat(response).isNotNull();
+        assertThat(response.city()).isEqualTo("London");
     }
 
     @DisplayName("JUnit test for getSunriseSunset() when city does not exist")
@@ -110,11 +110,11 @@ class SolarWatchServiceTest {
                 .willReturn(Optional.of(new SunriseSunsetResponse(new SunriseSunsetResults("06:30 AM", "06:45 PM"))));
 
         // WHEN
-        Optional<SolarWatchResponse> response = solarWatchService.getSunriseSunset("London", testDate);
+        SolarWatchResponse response = solarWatchService.getSunriseSunset("London", testDate);
 
         // THEN
-        assertThat(response).isPresent();
-        assertThat(response.get().city()).isEqualTo("London");
+        assertThat(response).isNotNull();
+        assertThat(response.city()).isEqualTo("London");
     }
 
     @DisplayName("JUnit test for getSunriseSunset() when city is not found in API")
