@@ -83,7 +83,7 @@ To get a local copy up and running, follow these steps:
 2. **Clone the repository** to your machine by executing these commands in your **terminal**:
     ```bash
     git clone https://github.com/o-k-e/solar-watch.git
-    cd backend
+    cd solar-watch
     ```
    
 3. **Configure Environment Variables**
@@ -108,22 +108,33 @@ To get a local copy up and running, follow these steps:
       This setup is acceptable **only for local development** or **learning purposes**.  In a production setup, use secure environment variable management tools or secret vaults.
 
 4. **Ensure Docker is Running**
-     - Start `Docker Desktop`
+   - Start `Docker Desktop`
      
 5. **Build and run the containers**
-     - Execute the command in the `backend` folder:
-       ```bash
-       docker compose up --build
-       ```
+   - Execute the command in the `backend` folder:
+     ```bash
+     docker compose up --build
+     ```
 
 6. **Access the Application**
-     - Open your browser and visit: [http://localhost](http://localhost)
+   - Open your browser and visit: [http://localhost](http://localhost)
   
 7. **Stopping the application**
-    - To stop the containers, you can either press `CTRL+C` in the terminal (if running in the foreground), or run: 
-      ```bash
-      docker compose down -v
-      ```
+    
+- In your **terminal** press `Ctrl + C`
+- If you want to **stop and remove the containers**, but **keep the database data** for future runs, execute:
+  ```bash
+  docker compose down
+  ```
+  In this case, the database will **persist** between runs, and your data will still be available next time you start the application.
+
+- If you want to **stop, remove the containers and delete the database data**, execute:
+  ```bash
+  docker compose down -v
+  ```
+  In this case, the database and all stored data will be completely removed.
+
+
 
 ## Usage
 Once the services are up and running, you can access the frontend to explore the application.
