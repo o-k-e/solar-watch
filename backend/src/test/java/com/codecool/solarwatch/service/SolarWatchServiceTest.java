@@ -88,9 +88,9 @@ class SolarWatchServiceTest {
         SunriseSunsetResponse apiResponse = new SunriseSunsetResponse(
                 new SunriseSunsetResults("06:30 AM", "06:45 PM"));
 
-        List<SunriseSunset> sunriseList = new ArrayList<>(); // ✅ Mutable List
+        List<SunriseSunset> sunriseList = new ArrayList<>();
         given(cityRepository.findByName("London")).willReturn(Optional.of(mockCity));
-        given(mockCity.getSunriseSunsets()).willReturn(sunriseList); // ✅ Correct type
+        given(mockCity.getSunriseSunsets()).willReturn(sunriseList);
         given(mockCity.getLatitude()).willReturn(51.5074);
         given(mockCity.getLongitude()).willReturn(-0.1276);
         given(mockCity.getName()).willReturn("London");
