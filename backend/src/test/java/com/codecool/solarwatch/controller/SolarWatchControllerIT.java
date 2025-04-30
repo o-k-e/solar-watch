@@ -53,7 +53,12 @@ public class SolarWatchControllerIT {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void givenCityWithData_whenGetSunriseSunset_thenReturnData() throws Exception {
         // GIVEN
-        City testCity = new City("London", -0.1276474, 51.5073219, "GB");
+        City testCity = City.builder()
+                .name("London")
+                .longitude(-0.1276474)
+                .latitude(51.5073219)
+                .country("GB")
+                .build();
         cityRepository.save(testCity);
 
         SunriseSunset testSunriseSunset = new SunriseSunset(LocalDate.now(), "6:18:43 AM", "6:01:37 PM");
