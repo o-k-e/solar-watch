@@ -43,7 +43,6 @@ public class SolarWatchControllerIT {
 
     @BeforeEach
     void setUp() {
-        // Clear DB before each test
         sunriseSunsetRepository.deleteAll();
         cityRepository.deleteAll();
     }
