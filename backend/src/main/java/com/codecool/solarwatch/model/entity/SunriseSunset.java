@@ -1,10 +1,16 @@
 package com.codecool.solarwatch.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SunriseSunset {
 
     @Id
@@ -18,42 +24,6 @@ public class SunriseSunset {
     public SunriseSunset(LocalDate date, String sunrise, String sunset) {
         this.date = date;
         this.sunrise = sunrise;
-        this.sunset = sunset;
-    }
-
-    public SunriseSunset() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getSunrise() {
-        return sunrise;
-    }
-
-    public void setSunrise(String sunrise) {
-        this.sunrise = sunrise;
-    }
-
-    public String getSunset() {
-        return sunset;
-    }
-
-    public void setSunset(String sunset) {
         this.sunset = sunset;
     }
 }

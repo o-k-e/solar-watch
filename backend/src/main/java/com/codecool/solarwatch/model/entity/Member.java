@@ -22,5 +22,4 @@ public class Member {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
-
 }
